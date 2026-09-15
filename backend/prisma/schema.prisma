@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN_SPACE
+  MEMBER
+}
+
+enum SpaceType {
+  DESK
+  MEETING_ROOM
+  PRIVATE_OFFICE
+}
+
+enum ReservasiStatus {
+  BELUM_DIKONFIRM
+  DISETUJUI
+  AKTIF
+  SELESAI
+  DIBATALKAN
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  role     Role
+
+  member Member?
+  owner  SpaceOwner?
+}
+
+model Member {
+  id          Int      @id @default(autoincrement())
+  nama_member String
+  instansi    String?
+  alamat      String?
+  telp        String?
+  foto        String?
+  id_user     Int?     @unique
+  user        User?    @relation(fields: [id_user], references: [id])
+
+  reservasis Reservasi[]
+}
+
+model SpaceOwner {
+  id             Int     @id @default(autoincrement())
+  nama_coworking String
+  nama_pemilik   String
+  telp           String?
+  id_user        Int?    @unique
+  user           User?   @relation(fields: [id_user], references: [id])
+
+  spaces     Space[]
+  reservasis Reservasi[]
+}
+
+model Space {
+  id            Int       @id @default(autoincrement())
+  nama_space    String
+  harga_per_jam Float
+  tipe          SpaceType
+  kapasitas     Int
+  deskripsi     String?
+  foto          String?
+  id_owner      Int?
+  owner         SpaceOwner? @relation(fields: [id_owner], references: [id])
+
+  detailReservasis DetailReservasi[]
+}
+
+model Diskon {
+  id                Int      @id @default(autoincrement())
+  kode_diskon       String   @unique
+  nama_diskon       String
+  persentase_diskon Float
+  tanggal_awal      DateTime
+  tanggal_akhir     DateTime
+
+  detailReservasis DetailReservasi[]
+}
+
+model Reservasi {
+  id                Int             @id @default(autoincrement())
+  tanggal_reservasi DateTime
+  jam_mulai         String
+  durasi_jam        Int
+  status            ReservasiStatus @default(BELUM_DIKONFIRM)
+  kode_reservasi    String?         @unique
+  check_in_at       DateTime?
+  check_out_at      DateTime?
+  id_owner          Int?
+  owner             SpaceOwner?     @relation(fields: [id_owner], references: [id])
+  id_member         Int?
+  member            Member?         @relation(fields: [id_member], references: [id])
+
+  details DetailReservasi[]
+}
+
+model DetailReservasi {
+  id           Int        @id @default(autoincrement())
+  total_harga  Float?
+  id_reservasi Int?
+  reservasi    Reservasi? @relation(fields: [id_reservasi], references: [id])
+  id_space     Int?
+  space        Space?     @relation(fields: [id_space], references: [id])
+  id_diskon    Int?
+  diskon       Diskon?    @relation(fields: [id_diskon], references: [id])
+}

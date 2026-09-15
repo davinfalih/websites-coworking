@@ -1,0 +1,638 @@
+{
+  "info": {
+    "name": "Smart Space Booking API (UKL Backend)",
+    "description": "Postman collection untuk testing API backend Smart Space Booking (NestJS + Prisma + MariaDB).\\n\\nLangkah pakai:\\n1. Pilih environment / gunakan variable bawaan (host = http://localhost:3000).\\n2. Jalankan folder 'Auth' -> login Admin & Member agar token tersimpan otomatis.\\n3. Request lain yang butuh akses memakai header Authorization: Bearer {{owner_token}} / {{member_token}}.\\n\\nAkun test: noda owner1/password123 (ADMIN_SPACE), member1/password123 (MEMBER).\\nStatus reservasi: BELUM_DIKONFIRM, DISETUJUI, AKTIF, SELESAI, DIBATALKAN.\\nTipe space: DESK, MEETING_ROOM, PRIVATE_OFFICE.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "host", "value": "http://localhost:3000", "type": "string" },
+    { "key": "owner_token", "value": "", "type": "string" },
+    { "key": "member_token", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Member",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{host}}/auth/register/member", "host": ["{{host}}"], "path": ["auth", "register", "member"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"member2\",\n  \"password\": \"password123\",\n  \"nama_member\": \"Nadia Putri\",\n  \"instansi\": \"PT Kreatif Nusantara\",\n  \"alamat\": \"Jakarta\",\n  \"telp\": \"081234567890\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Registrasi akun member/pengunjung. username harus unik."
+          },
+          "response": []
+        },
+        {
+          "name": "Register Owner (ADMIN_SPACE)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{host}}/auth/register/owner", "host": ["{{host}}"], "path": ["auth", "register", "owner"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"owner2\",\n  \"password\": \"password123\",\n  \"nama_coworking\": \"Space Kreatif Jakarta\",\n  \"nama_pemilik\": \"Dewi Anggraini\",\n  \"telp\": \"081298765432\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Registrasi pengelola space (role ADMIN_SPACE)."
+          },
+          "response": []
+        },
+        {
+          "name": "Login Owner (simpan token)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{host}}/auth/login", "host": ["{{host}}"], "path": ["auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"owner1\",\n  \"password\": \"password123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Login sebagai ADMIN_SPACE. Token otomatis disimpan ke variabel owner_token.",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "const d = pm.response.json();",
+                    "pm.test('Login owner sukses', () => pm.expect(pm.response.code).to.eql(200));",
+                    "if (d && d.data && d.data.access_token) {",
+                    "  const role = (d.data.user && d.data.user.role) || d.data.role;",
+                    "  if (role === 'ADMIN_SPACE') pm.collectionVariables.set('owner_token', d.data.access_token);",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ]
+          },
+          "response": []
+        },
+        {
+          "name": "Login Member (simpan token)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{host}}/auth/login", "host": ["{{host}}"], "path": ["auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"member1\",\n  \"password\": \"password123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Login sebagai MEMBER. Token otomatis disimpan ke variabel member_token.",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "const d = pm.response.json();",
+                    "pm.test('Login member sukses', () => pm.expect(pm.response.code).to.eql(200));",
+                    "if (d && d.data && d.data.access_token) {",
+                    "  const role = (d.data.user && d.data.user.role) || d.data.role;",
+                    "  if (role === 'MEMBER') pm.collectionVariables.set('member_token', d.data.access_token);",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ]
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Spaces",
+      "item": [
+        {
+          "name": "List semua space (publik)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{host}}/spaces", "host": ["{{host}}"], "path": ["spaces"] },
+            "description": "Daftar semua space yang tersedia, tanpa autentikasi."
+          },
+          "response": []
+        },
+        {
+          "name": "Space milik saya (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/spaces/me", "host": ["{{host}}"], "path": ["spaces", "me"] },
+            "description": "[ADMIN_SPACE] Lihat daftar space milik lokasi sendiri."
+          },
+          "response": []
+        },
+        {
+          "name": "Detail space (publik)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{host}}/spaces/1", "host": ["{{host}}"], "path": ["spaces", "1"] },
+            "description": "Detail space berdasarkan ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Tambah space (owner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/spaces", "host": ["{{host}}"], "path": ["spaces"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nama_space\": \"Meeting Room B\",\n  \"harga_per_jam\": 120000,\n  \"tipe\": \"MEETING_ROOM\",\n  \"kapasitas\": 12,\n  \"deskripsi\": \"Ruang rapat besar dengan TV 65 inci\",\n  \"foto\": \"https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Tambah space baru. tipe: DESK | MEETING_ROOM | PRIVATE_OFFICE"
+          },
+          "response": []
+        },
+        {
+          "name": "Update space (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/spaces/1", "host": ["{{host}}"], "path": ["spaces", "1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"harga_per_jam\": 17500,\n  \"deskripsi\": \"Meja kerja pribadi dekat jendela (updated)\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Update sebagian field space."
+          },
+          "response": []
+        },
+        {
+          "name": "Hapus space (owner)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/spaces/1", "host": ["{{host}}"], "path": ["spaces", "1"] },
+            "description": "[ADMIN_SPACE] Hapus space berdasarkan ID."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Diskon",
+      "item": [
+        {
+          "name": "List semua diskon (publik)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{host}}/diskon", "host": ["{{host}}"], "path": ["diskon"] },
+            "description": "Daftar semua kode diskon/promo."
+          },
+          "response": []
+        },
+        {
+          "name": "Detail diskon (publik)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{host}}/diskon/1", "host": ["{{host}}"], "path": ["diskon", "1"] },
+            "description": "Detail diskon berdasarkan ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Tambah diskon (owner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/diskon", "host": ["{{host}}"], "path": ["diskon"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kode_diskon\": \"HEMAT20\",\n  \"nama_diskon\": \"Diskon 20% Launching\",\n  \"persentase_diskon\": 20,\n  \"tanggal_awal\": \"2026-10-01\",\n  \"tanggal_akhir\": \"2026-12-31\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Tambah kode diskon baru."
+          },
+          "response": []
+        },
+        {
+          "name": "Update diskon (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/diskon/1", "host": ["{{host}}"], "path": ["diskon", "1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"persentase_diskon\": 15\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Update kode diskon."
+          },
+          "response": []
+        },
+        {
+          "name": "Hapus diskon (owner)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/diskon/1", "host": ["{{host}}"], "path": ["diskon", "1"] },
+            "description": "[ADMIN_SPACE] Hapus kode diskon."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Members",
+      "item": [
+        {
+          "name": "Profil saya (member)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{member_token}}" }],
+            "url": { "raw": "{{host}}/members/me", "host": ["{{host}}"], "path": ["members", "me"] },
+            "description": "[MEMBER] Profil member yang sedang login."
+          },
+          "response": []
+        },
+        {
+          "name": "Update profil saya (member)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{member_token}}" }
+            ],
+            "url": { "raw": "{{host}}/members/me", "host": ["{{host}}"], "path": ["members", "me"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nama_member\": \"Budi Santoso\",\n  \"instansi\": \"PT Maju Jaya Tbk\",\n  \"telp\": \"081298765432\",\n  \"foto\": \"https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[MEMBER] Update profil sendiri."
+          },
+          "response": []
+        },
+        {
+          "name": "List semua member (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/members", "host": ["{{host}}"], "path": ["members"] },
+            "description": "[ADMIN_SPACE] Daftar semua member. (member yang memanggilnya akan ditolak 403)"
+          },
+          "response": []
+        },
+        {
+          "name": "Detail member (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/members/1", "host": ["{{host}}"], "path": ["members", "1"] },
+            "description": "[ADMIN_SPACE] Detail member berdasarkan ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Tambah member (owner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/members", "host": ["{{host}}"], "path": ["members"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"member3\",\n  \"password\": \"password123\",\n  \"nama_member\": \"Rizky Ramadhan\",\n  \"instansi\": \"Startup.io\",\n  \"telp\": \"081377788899\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Tambah member baru langsung dari sisi admin."
+          },
+          "response": []
+        },
+        {
+          "name": "Update member (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/members/1", "host": ["{{host}}"], "path": ["members", "1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"instansi\": \"PT Maju Jaya Internasional\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Update data member."
+          },
+          "response": []
+        },
+        {
+          "name": "Hapus member (owner)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/members/1", "host": ["{{host}}"], "path": ["members", "1"] },
+            "description": "[ADMIN_SPACE] Hapus akun member."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Space Owners",
+      "item": [
+        {
+          "name": "Profil saya (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/space-owners/me", "host": ["{{host}}"], "path": ["space-owners", "me"] },
+            "description": "[ADMIN_SPACE] Profil lokasi coworking yang sedang login."
+          },
+          "response": []
+        },
+        {
+          "name": "Update profil saya (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/space-owners/me", "host": ["{{host}}"], "path": ["space-owners", "me"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nama_coworking\": \"Coworking Nusantara Premium\",\n  \"nama_pemilik\": \"Siti Rahayu\",\n  \"telp\": \"081234567890\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Update profil lokasi/pengelola."
+          },
+          "response": []
+        },
+        {
+          "name": "List semua pengelola (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/space-owners", "host": ["{{host}}"], "path": ["space-owners"] },
+            "description": "[ADMIN_SPACE] Daftar semua pengelola space."
+          },
+          "response": []
+        },
+        {
+          "name": "Detail pengelola (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/space-owners/1", "host": ["{{host}}"], "path": ["space-owners", "1"] },
+            "description": "[ADMIN_SPACE] Detail pengelola berdasarkan ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Tambah pengelola (owner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/space-owners", "host": ["{{host}}"], "path": ["space-owners"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"owner3\",\n  \"password\": \"password123\",\n  \"nama_coworking\": \"Colab Space Bandung\",\n  \"nama_pemilik\": \"Andi Wijaya\",\n  \"telp\": \"082110203040\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Tambah pengelola space baru."
+          },
+          "response": []
+        },
+        {
+          "name": "Update pengelola (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" }
+            ],
+            "url": { "raw": "{{host}}/space-owners/1", "host": ["{{host}}"], "path": ["space-owners", "1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nama_pemilik\": \"Siti Rahayu S.Kom\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[ADMIN_SPACE] Update pengelola space."
+          },
+          "response": []
+        },
+        {
+          "name": "Hapus pengelola (owner)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/space-owners/1", "host": ["{{host}}"], "path": ["space-owners", "1"] },
+            "description": "[ADMIN_SPACE] Hapus pengelola space."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reservasi",
+      "item": [
+        {
+          "name": "Buat reservasi (member)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{member_token}}" }
+            ],
+            "url": { "raw": "{{host}}/reservasi", "host": ["{{host}}"], "path": ["reservasi"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tanggal_reservasi\": \"2026-10-10\",\n  \"jam_mulai\": \"14:00\",\n  \"durasi_jam\": 3,\n  \"id_owner\": 1,\n  \"items\": [\n    {\n      \"id_space\": 2,\n      \"kode_diskon\": \"DISKON10\"\n    }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "[MEMBER] Pesan space. jam_mulai format 'HH:mm'. Dapat memakai beberapa items (multi ruang). Kode diskon opsional. total_harga sudah menghitung diskon per item. Catat id reservasi dari response untuk request selanjutnya."
+          },
+          "response": []
+        },
+        {
+          "name": "Histori reservasi saya (member)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{member_token}}" }],
+            "url": {
+              "raw": "{{host}}/reservasi/member/history?month=2026-10",
+              "host": ["{{host}}"],
+              "path": ["reservasi", "member", "history"],
+              "query": [{ "key": "month", "value": "2026-10", "description": "Filter bulan (opsional, format YYYY-MM)" }]
+            },
+            "description": "[MEMBER] Histori reservasi milik sendiri, bisa difilter per bulan."
+          },
+          "response": []
+        },
+        {
+          "name": "Semua reservasi (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": {
+              "raw": "{{host}}/reservasi/admin?month=2026-10",
+              "host": ["{{host}}"],
+              "path": ["reservasi", "admin"],
+              "query": [
+                { "key": "status", "value": "", "description": "Filter status (opsional)" },
+                { "key": "month", "value": "2026-10", "description": "Filter bulan (opsional)" }
+              ]
+            },
+            "description": "[ADMIN_SPACE] Semua reservasi masuk, filter by status & bulan."
+          },
+          "response": []
+        },
+        {
+          "name": "Detail reservasi",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{member_token}}" }],
+            "url": { "raw": "{{host}}/reservasi/1", "host": ["{{host}}"], "path": ["reservasi", "1"] },
+            "description": "Detail reservasi berdasarkan ID (boleh dipakai member pemilik / owner)."
+          },
+          "response": []
+        },
+        {
+          "name": "E-ticket + QR (member)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{member_token}}" }],
+            "url": { "raw": "{{host}}/reservasi/1/eticket", "host": ["{{host}}"], "path": ["reservasi", "1", "eticket"] },
+            "description": "E-ticket / bukti reservasi berisi QR code."
+          },
+          "response": []
+        },
+        {
+          "name": "Ubah status / Batalkan",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{member_token}}" }
+            ],
+            "url": { "raw": "{{host}}/reservasi/1/status", "host": ["{{host}}"], "path": ["reservasi", "1", "status"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"DIBATALKAN\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "ADMIN: set DISETUJUI/AKTIF/SELESAI/DIBATALKAN. MEMBER: hanya bisa batalkan reservasi miliknya yang masih BELUM_DIKONFIRM (status DIBATALKAN)."
+          },
+          "response": []
+        },
+        {
+          "name": "Check-in (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/reservasi/1/check-in", "host": ["{{host}}"], "path": ["reservasi", "1", "check-in"] },
+            "description": "[ADMIN_SPACE] Check-in tamu di lokasi (status -> AKTIF)."
+          },
+          "response": []
+        },
+        {
+          "name": "Check-out (owner)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/reservasi/1/check-out", "host": ["{{host}}"], "path": ["reservasi", "1", "check-out"] },
+            "description": "[ADMIN_SPACE] Check-out tamu di lokasi (status -> SELESAI)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Dashboard summary (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/reports/dashboard", "host": ["{{host}}"], "path": ["reports", "dashboard"] },
+            "description": "[ADMIN_SPACE] Ringkasan dashboard (total, breakdown status, pendapatan)."
+          },
+          "response": []
+        },
+        {
+          "name": "Pendapatan per bulan (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/reports/revenue/month", "host": ["{{host}}"], "path": ["reports", "revenue", "month"] },
+            "description": "[ADMIN_SPACE] Estimasi pendapatan per bulan."
+          },
+          "response": []
+        },
+        {
+          "name": "Pendapatan per tipe space (owner)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{owner_token}}" }],
+            "url": { "raw": "{{host}}/reports/revenue/space-type", "host": ["{{host}}"], "path": ["reports", "revenue", "space-type"] },
+            "description": "[ADMIN_SPACE] Distribusi pendapatan per jenis space."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "item": [
+        {
+          "name": "Upload gambar (foto space/profil)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{owner_token}}" },
+              { "key": "Content-Type", "value": "multipart/form-data" }
+            ],
+            "url": { "raw": "{{host}}/uploads", "host": ["{{host}}"], "path": ["uploads"] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Upload gambar (maks 5MB; jpg/png/webp/gif). Pilih file di tab Body -> form-data. Response berisi url: /uploads/<filename>."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
