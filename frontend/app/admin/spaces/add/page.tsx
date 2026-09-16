@@ -83,16 +83,17 @@ export default function AddSpacePage() {
   };
 
   const inputClass =
-    'w-full pl-10 pr-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm';
+    'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition';
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[#1a120b]">Tambah Space Baru</h1>
-          <p className="text-sm text-gray-500 mt-1">Lengkapi detail space yang akan disewakan.</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Manajemen Ruang</p>
+          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">Tambah Space Baru</h1>
+          <p className="mt-1 text-sm text-slate-500">Lengkapi detail space yang akan disewakan.</p>
         </div>
-        <Link href="/admin/spaces" className="flex items-center gap-2 border border-amber-200 text-gray-600 hover:bg-[#faf6f0] text-sm font-medium px-4 py-2.5 rounded-xl transition">
+        <Link href="/admin/spaces" className="inline-flex items-center justify-center gap-2 border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium px-5 py-2.5 rounded-xl transition">
           <ArrowLeft className="w-4 h-4" /> Kembali
         </Link>
       </div>
@@ -103,11 +104,11 @@ export default function AddSpacePage() {
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-6">
         {/* Foto */}
-        <div className="bg-white rounded-2xl border border-amber-100 p-6">
-          <h2 className="text-sm font-semibold text-[#1a120b] mb-4 flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-amber-700" /> Foto Space
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-[0_1px_2px_0_rgba(15,23,42,0.04)]">
+          <h2 className="text-sm font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-emerald-700" /> Foto Space
           </h2>
-          <div className="rounded-xl overflow-hidden border border-dashed border-amber-300 bg-[#faf6f0] aspect-square flex items-center justify-center relative">
+          <div className="rounded-xl overflow-hidden border-2 border-dashed border-slate-200 bg-slate-50 aspect-square flex items-center justify-center relative">
             {preview ? (
               <>
                 <img src={preview} alt="Preview" className="w-full h-full object-cover" />
@@ -124,37 +125,37 @@ export default function AddSpacePage() {
               </>
             ) : (
               <div className="text-center px-6">
-                <ImageOff className="w-10 h-10 text-amber-600/30 mx-auto mb-3" />
-                <p className="text-xs text-gray-400">Belum ada foto. Unggah foto space (opsional).</p>
+                <ImageOff className="w-10 h-10 text-emerald-600/30 mx-auto mb-3" />
+                <p className="text-xs text-slate-400">Belum ada foto. Unggah foto space (opsional).</p>
               </div>
             )}
           </div>
-          <label className="mt-4 w-full flex items-center justify-center gap-2 border-2 border-dashed border-amber-300 bg-amber-50/50 hover:bg-amber-50 text-amber-700 text-sm font-medium py-3 rounded-xl cursor-pointer transition">
+          <label className="mt-4 w-full flex items-center justify-center gap-2 border-2 border-dashed border-emerald-300 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-700 text-sm font-medium py-3 rounded-xl cursor-pointer transition">
             <Upload className="w-4 h-4" />
             {uploading ? 'Mengunggah...' : preview ? 'Ganti Foto' : 'Unggah Foto'}
             <input type="file" accept="image/*" onChange={handleUpload} className="hidden" disabled={uploading} />
           </label>
-          <p className="text-[11px] text-gray-400 mt-2 text-center">PNG, JPG, atau WEBP. Maks 5MB.</p>
+          <p className="text-[11px] text-slate-400 mt-2 text-center">PNG, JPG, atau WEBP. Maks 5MB.</p>
         </div>
 
         {/* Detail */}
-        <div className="bg-white rounded-2xl border border-amber-100 p-6">
-          <h2 className="text-sm font-semibold text-[#1a120b] mb-4 flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-amber-700" /> Detail Space
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-[0_1px_2px_0_rgba(15,23,42,0.04)]">
+          <h2 className="text-sm font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-emerald-700" /> Detail Space
           </h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Nama Space</label>
-              <input type="text" value={form.nama_space} onChange={(e) => setForm({ ...form, nama_space: e.target.value })} placeholder="Contoh: Personal Desk 02" className="w-full px-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm" />
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Nama Space</label>
+              <input type="text" value={form.nama_space} onChange={(e) => setForm({ ...form, nama_space: e.target.value })} placeholder="Contoh: Personal Desk 02" className={inputClass} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1.5">Tipe Space</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Tipe Space</label>
                 <select
                   value={form.tipe}
                   onChange={(e) => setForm({ ...form, tipe: e.target.value as any })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm"
+                  className={inputClass}
                 >
                   {Object.entries(SPACE_TYPE_LABEL).map(([k, v]) => (
                     <option key={k} value={k}>{v}</option>
@@ -162,32 +163,32 @@ export default function AddSpacePage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1.5">Kapasitas (orang)</label>
-                <input type="number" min={1} value={form.kapasitas} onChange={(e) => setForm({ ...form, kapasitas: e.target.value })} placeholder="1" className="w-full px-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm" />
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Kapasitas (orang)</label>
+                <input type="number" min={1} value={form.kapasitas} onChange={(e) => setForm({ ...form, kapasitas: e.target.value })} placeholder="1" className={inputClass} />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Harga Sewa per Jam (Rp)</label>
-              <input type="number" min={0} value={form.harga_per_jam} onChange={(e) => setForm({ ...form, harga_per_jam: e.target.value })} placeholder="15000" className="w-full px-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm" />
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Harga Sewa per Jam (Rp)</label>
+              <input type="number" min={0} value={form.harga_per_jam} onChange={(e) => setForm({ ...form, harga_per_jam: e.target.value })} placeholder="15000" className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Deskripsi Fasilitas</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Deskripsi Fasilitas</label>
               <textarea
                 value={form.deskripsi}
                 onChange={(e) => setForm({ ...form, deskripsi: e.target.value })}
                 rows={4}
                 placeholder="Contoh: Meja kerja dengan kursi ergonomis & stop kontak..."
-                className="w-full px-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm resize-none"
+                className={`${inputClass} resize-none`}
               />
             </div>
 
             <div className="flex gap-3 pt-2">
-              <button type="submit" disabled={saving || uploading} className="flex items-center gap-2 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white text-sm font-semibold px-6 py-3 rounded-xl transition disabled:opacity-60 shadow-lg shadow-amber-900/20">
+              <button type="submit" disabled={saving || uploading} className="inline-flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold px-6 py-3 rounded-xl transition disabled:opacity-60">
                 {saving ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Menyimpan...</> : <><Save className="w-4 h-4" /> Simpan Space</>}
               </button>
-              <Link href="/admin/spaces" className="flex items-center gap-2 border border-amber-200 text-gray-600 hover:bg-[#faf6f0] text-sm font-medium px-6 py-3 rounded-xl transition">
+              <Link href="/admin/spaces" className="inline-flex items-center justify-center gap-2 border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium px-6 py-3 rounded-xl transition">
                 Batal
               </Link>
             </div>

@@ -117,44 +117,44 @@ export default function AdminReservasiPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[#1a120b]">Kelola Reservasi</h1>
-          <p className="text-sm text-gray-500 mt-1">Pantau dan proses semua reservasi member.</p>
+          <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">Kelola Reservasi</h1>
+          <p className="text-sm text-slate-500 mt-1">Pantau dan proses semua reservasi member.</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-500 bg-white border border-amber-100 rounded-xl px-4 py-2.5">
+        <div className="flex items-center gap-2 text-sm text-slate-500 bg-white border border-slate-200 rounded-xl px-4 py-2.5">
           <span>Total (tanpa batal):</span>
-          <span className="font-bold text-amber-700">{formatRupiah(totalDisplay)}</span>
+          <span className="font-bold text-emerald-700">{formatRupiah(totalDisplay)}</span>
         </div>
       </div>
 
       {message && (
-        <div className={`text-sm px-4 py-3 rounded-xl border ${message.type === 'success' ? 'text-green-700 bg-green-50 border-green-100' : 'text-red-600 bg-red-50 border-red-100'}`}>
+        <div className={`text-sm px-4 py-3 rounded-xl border ${message.type === 'success' ? 'text-emerald-700 bg-emerald-50 border-emerald-100' : 'text-red-600 bg-red-50 border-red-100'}`}>
           {message.text}
         </div>
       )}
 
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cari kode, member, atau space..." className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-amber-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-sm" />
+          <Search className="w-4 h-4 text-emerald-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cari kode, member, atau space..." className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:border-emerald-700 focus:ring-2 focus:ring-emerald-500/20 outline-none transition text-sm" />
         </div>
-        <input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="px-4 py-2.5 rounded-xl border border-amber-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-sm text-[#1a120b]" />
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className="px-4 py-2.5 rounded-xl border border-amber-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-sm text-[#1a120b]">
+        <input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:border-emerald-700 focus:ring-2 focus:ring-emerald-500/20 outline-none transition text-sm text-slate-900" />
+        <select value={status} onChange={(e) => setStatus(e.target.value)} className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:border-emerald-700 focus:ring-2 focus:ring-emerald-500/20 outline-none transition text-sm text-slate-900">
           <option value="ALL">Semua Status</option>
           {Object.entries(RESERVASI_STATUS_LABEL).map(([k, v]) => (
             <option key={k} value={k}>{v}</option>
           ))}
         </select>
-        <button onClick={() => load(month, status)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-amber-200 text-amber-700 hover:bg-amber-50 text-sm font-medium transition">
+        <button onClick={() => load(month, status)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-emerald-700 hover:bg-emerald-50 text-sm font-medium transition">
           <RefreshCw className="w-4 h-4" /> Muat Ulang
         </button>
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-2xl border border-amber-100 p-12 text-center text-gray-400 text-sm">Memuat reservasi...</div>
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-gray-400 text-sm">Memuat reservasi...</div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-amber-100 p-12 text-center">
-          <div className="w-14 h-14 mx-auto rounded-full bg-amber-50 flex items-center justify-center mb-4">
-            <CalendarClock className="w-6 h-6 text-amber-600/60" />
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
+          <div className="w-14 h-14 mx-auto rounded-full bg-emerald-50 flex items-center justify-center mb-4">
+            <CalendarClock className="w-6 h-6 text-emerald-600/60" />
           </div>
           <p className="text-gray-500 text-sm">Belum ada reservasi pada periode ini.</p>
         </div>
@@ -163,14 +163,14 @@ export default function AdminReservasiPage() {
           {filtered.map((r) => {
             const firstDetail = r.details?.[0];
             return (
-              <div key={r.id} className="bg-white rounded-2xl border border-amber-100 p-4 md:p-5 hover:shadow-lg hover:shadow-amber-900/8 transition-all duration-300">
+              <div key={r.id} className="bg-white rounded-2xl border border-slate-200 p-4 md:p-5 hover:shadow-lg transition-all duration-300">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-700 font-serif font-bold text-xs">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center text-emerald-700 font-semibold text-xs">
                       {r.kode_reservasi.slice(-4)}
                     </div>
                     <div>
-                      <p className="font-mono font-bold text-sm text-[#1a120b]">{r.kode_reservasi}</p>
+                      <p className="font-mono font-semibold text-sm text-slate-900">{r.kode_reservasi}</p>
                       <p className="text-xs text-gray-400">
                         {r.member?.nama_member || '-'} • {formatDate(r.tanggal_reservasi)} • {r.jam_mulai}{Number(r.jam_mulai.slice(0, 2)) + r.durasi_jam}:00
                       </p>
@@ -181,18 +181,18 @@ export default function AdminReservasiPage() {
                   </span>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 bg-[#faf6f0] rounded-xl p-3">
+                <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-50 rounded-xl p-3">
                   <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-gray-500">
                     <span>
-                      Space: <span className="font-medium text-[#1a120b]">{firstDetail?.space?.nama_space || '-'}</span>
+                      Space: <span className="font-medium text-slate-900">{firstDetail?.space?.nama_space || '-'}</span>
                     </span>
-                    <span>Durasi: <span className="font-medium text-[#1a120b]">{r.durasi_jam} jam</span></span>
+                    <span>Durasi: <span className="font-medium text-slate-900">{r.durasi_jam} jam</span></span>
                     <span>
-                      Pengelola: <span className="font-medium text-[#1a120b]">{r.owner?.nama_coworking || '-'}</span>
+                      Pengelola: <span className="font-medium text-slate-900">{r.owner?.nama_coworking || '-'}</span>
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className="text-sm font-bold text-amber-700">
+                    <span className="text-sm font-bold text-emerald-700">
                       {formatRupiah(firstDetail?.total_harga || 0)}
                     </span>
                     <ActionButtons r={r} />

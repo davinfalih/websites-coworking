@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSpace - Masuk ke Akun</title>
+<!-- Tailwind CSS v3 with Forms Plugin -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#0F766E', // Primary Emerald
+              hover: '#0D655E',
+              dark: '#115E59',
+              light: '#E6F4F1',
+              accent: '#10B981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-overrides">
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-overlay {
+      background: linear-gradient(180deg, rgba(8, 28, 26, 0.78) 0%, rgba(6, 24, 22, 0.90) 100%);
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased min-h-screen">
+<div class="min-h-screen flex flex-col lg:flex-row">
+<!-- BEGIN: LeftBrandSidebar -->
+<section class="relative w-full lg:w-[46%] min-h-[500px] lg:min-h-screen flex flex-col justify-between p-8 lg:p-14 overflow-hidden" data-purpose="brand-showcase">
+<!-- Background Image -->
+<img alt="Modern Coworking Space SmartSpace" class="absolute inset-0 w-full h-full object-cover object-center -z-20" src="https://lh3.googleusercontent.com/aida/AEtjO1VEtup4i2YFNalLKN4roWpJhvhUvyC3oZdfsJo0LRLW-wSIooCcldCks9jydeJ9OfDlGQ_n9DiYZOWIsao6y9kXNqITLgzo2GU5qdxx5K59ZxujpQZA38lcW36wWPu6Fu82690VEkj06MRE43at8Ep71a6ohgJXUBPc5pr9lwhYD58wltk5I6htbnNh_hfR3OrspJ41vEoiqQGixNuIj7huGl2kCXol_j44OyX2TvryuSvfx_x_6l8cJDxj"/>
+<!-- Dark Emerald Tint Overlay -->
+<div class="hero-overlay absolute inset-0 -z-10"></div>
+<!-- Top Header & Logo -->
+<div class="flex items-center gap-3">
+<!-- Logo Icon -->
+<div class="w-11 h-11 rounded-xl bg-teal-900/60 border border-teal-500/30 backdrop-blur-md flex items-center justify-center text-teal-300">
+<svg class="h-6 w-6 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-white font-bold text-xl tracking-tight">SmartSpace</span>
+<span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+</div>
+<p class="text-[10px] font-semibold text-teal-200/80 tracking-widest uppercase">Workstation &amp; Booking</p>
+</div>
+</div>
+<!-- Center Copy & Value Propositions -->
+<div class="my-10 lg:my-auto max-w-lg space-y-6">
+<!-- Tag Pill -->
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-900/50 border border-teal-500/30 text-emerald-300 text-xs font-medium backdrop-blur-sm">
+<span>🌿</span>
+<span>Ruang Kerja Ergonomis &amp; Tenang</span>
+</div>
+<!-- Headline -->
+<h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white leading-tight tracking-tight">
+          Ruang Kerja Tenang untuk Produktivitas Maksimal.
+        </h1>
+<p class="text-slate-200/90 text-sm sm:text-base leading-relaxed">
+          Temukan suasana bekerja yang kondusif dengan fasilitas pintar terintegrasi, fleksibilitas reservasi instan, dan ekosistem profesional dinamis.
+        </p>
+<!-- Bullet Highlights -->
+<div class="space-y-3.5 pt-2">
+<div class="flex items-start gap-3">
+<div class="flex-shrink-0 w-6 h-6 rounded-full bg-teal-900/70 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mt-0.5">
+<svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<p class="text-white text-sm font-medium">Akses 24/7 High-speed Internet &amp; Private Power-outlets</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="flex-shrink-0 w-6 h-6 rounded-full bg-teal-900/70 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mt-0.5">
+<svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<p class="text-white text-sm font-medium">Ergonomic Pods &amp; Private Meeting Rooms</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="flex-shrink-0 w-6 h-6 rounded-full bg-teal-900/70 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mt-0.5">
+<svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<p class="text-white text-sm font-medium">Komunitas Profesional &amp; Kreatif Terkurasi</p>
+</div>
+</div>
+</div>
+<!-- Bottom Member Card Testimonial -->
+<div class="bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 flex items-center gap-4 max-w-lg mt-6" data-purpose="testimonial-card">
+<div class="w-12 h-12 rounded-full bg-teal-800/80 border border-teal-400/40 flex items-center justify-center text-teal-200 font-bold text-sm flex-shrink-0">
+          RA
+        </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap mb-1">
+<span class="text-white font-semibold text-sm">Raka Anindito</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-medium bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+<svg class="h-3 w-3" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+              Verified Member
+            </span>
+</div>
+<p class="text-xs text-slate-300 italic leading-relaxed">
+            "Booking workstation jadi hitungan detik. Tempatnya tenang, estetik, dan koneksinya luar biasa stabil untuk remote meeting harian."
+          </p>
+</div>
+</div>
+</section>
+<!-- END: LeftBrandSidebar -->
+<!-- BEGIN: RightLoginFormArea -->
+<main class="w-full lg:w-[54%] bg-slate-50/50 flex flex-col justify-between p-6 sm:p-10 lg:p-16 overflow-y-auto" data-purpose="main-login-content">
+<!-- Top Secondary Navigation -->
+<div class="flex items-center justify-between w-full max-w-md mx-auto mb-8">
+<a class="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors group" href="#">
+<svg class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+          Kembali ke Beranda
+        </a>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-brand border border-emerald-100">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          Sistem Online
+        </span>
+</div>
+<!-- Main Login Card / Content -->
+<div class="w-full max-w-md mx-auto my-auto py-2">
+<!-- Title & Subtitle -->
+<header class="mb-7 text-left">
+<h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Masuk ke Akun</h2>
+<p class="text-sm text-slate-500 mt-2 leading-relaxed">
+            Akses reservasi ruang kerja, check-in QR, atau kelola coworking space Anda.
+          </p>
+</header>
+<!-- Role Switcher Tabs (Segmented Control) -->
+<div aria-label="Pilih Tipe Pengguna" class="bg-slate-100 p-1.5 rounded-xl flex gap-1 mb-4 border border-slate-200" role="tablist">
+<!-- Member Tab -->
+<button aria-selected="true" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs sm:text-sm font-medium transition-all bg-white text-slate-900 shadow-sm border border-slate-200/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20" id="tab-member" onclick="switchTab('member')" role="tab" type="button">
+<svg class="h-4 w-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Member / Pengunjung
+          </button>
+<!-- Admin Tab -->
+<button aria-selected="false" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-800 transition-all border border-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500/20" id="tab-admin" onclick="switchTab('admin')" role="tab" type="button">
+<svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Admin Pengelola
+          </button>
+</div>
+<!-- Role Helper Notice Banner -->
+<div class="mb-6 p-3 rounded-lg bg-teal-50/70 border border-teal-100 flex items-start gap-2.5 transition-all" id="role-helper">
+<svg class="h-4 w-4 text-brand mt-0.5 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path>
+</svg>
+<div class="text-xs text-teal-900 leading-snug">
+<span class="font-medium" id="role-desc">Akses untuk reservasi meja kerja, private pod, dan riwayat booking.</span>
+<span class="block text-teal-700 mt-0.5">Tersedia switch instan untuk staf dan tim operasional.</span>
+</div>
+</div>
+<!-- Form Elements -->
+<form action="#" class="space-y-4" data-purpose="login-form" method="POST">
+<!-- Field: Username / Email -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5" for="identifier">
+              Username atau Email <span class="text-rose-500">*</span>
+</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<input class="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-brand transition" id="identifier" name="identifier" placeholder="nama@perusahaan.com atau username" required="" type="text"/>
+</div>
+</div>
+<!-- Field: Password -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider" for="password">
+                Kata Sandi <span class="text-rose-500">*</span>
+</label>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<input class="w-full pl-11 pr-11 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-brand transition" id="password" name="password" placeholder="Masukkan kata sandi" required="" type="password"/>
+<button aria-label="Tampilkan atau sembunyikan kata sandi" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none" id="togglePasswordBtn" onclick="togglePasswordVisibility()" type="button">
+<!-- Eye Icon (Visible state toggle) -->
+<svg class="h-5 w-5" fill="none" id="eyeIcon" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Remember Me & Forgot Password Row -->
+<div class="flex items-center justify-between pt-1 pb-1">
+<label class="inline-flex items-center gap-2 cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-brand border-slate-300 focus:ring-teal-500/30 focus:ring-offset-0 transition" id="remember" name="remember" type="checkbox"/>
+<span class="text-xs sm:text-sm text-slate-600">Ingat saya selama 30 hari</span>
+</label>
+<a class="text-xs sm:text-sm font-medium text-brand hover:text-brand-hover hover:underline" href="#">
+              Lupa Password?
+            </a>
+</div>
+<!-- Primary Submit Button -->
+<button class="w-full py-3 px-4 bg-brand hover:bg-brand-hover text-white rounded-lg font-semibold text-sm shadow-sm transition-all duration-200 flex items-center justify-center gap-2 focus:ring-4 focus:ring-emerald-500/20 active:scale-[0.99]" type="submit">
+<span>Masuk Sekarang</span>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-6">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-slate-200"></div>
+</div>
+<div class="relative flex justify-center text-xs uppercase tracking-wider">
+<span class="bg-slate-50/50 px-3 text-slate-400 font-medium">Atau masuk dengan</span>
+</div>
+</div>
+<!-- Social & SSO Actions -->
+<div class="space-y-3">
+<!-- Google SSO -->
+<button class="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 shadow-sm transition active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-slate-200" type="button">
+<svg class="h-4 w-4" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+</svg>
+<span>Lanjutkan dengan Google</span>
+</button>
+<!-- SSO Korporat Option -->
+<button class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm font-medium text-slate-600 shadow-sm transition active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-slate-200" type="button">
+<svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Single Sign-On (SSO) Perusahaan</span>
+</button>
+</div>
+<!-- Dynamic Role Footer Registration Link -->
+<div class="mt-8 text-center pt-2">
+<p class="text-xs sm:text-sm text-slate-600" id="bottom-register-container">
+            Belum punya akun Member? 
+            <a class="font-semibold text-brand hover:text-brand-hover hover:underline transition" href="#">
+              Daftar Akun Member
+            </a>
+</p>
+<p class="text-[11px] text-slate-400 mt-2" id="bottom-admin-note">
+            Perlu akses Admin Pengelola? Hubungi Super Admin atau <a class="text-slate-600 hover:underline" href="#">Ajukan Kemitraan Space</a>.
+          </p>
+</div>
+</div>
+<!-- Footer Copyright/T&C -->
+<footer class="w-full max-w-md mx-auto text-center pt-6 text-xs text-slate-400">
+<p>© 2025 SmartSpace Workstation &amp; Booking. Seluruh hak cipta dilindungi.</p>
+</footer>
+</main>
+<!-- END: RightLoginFormArea -->
+</div>
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="tab-switcher-and-toggle">
+    let currentRole = 'member';
+
+    function switchTab(role) {
+      currentRole = role;
+      const memberBtn = document.getElementById('tab-member');
+      const adminBtn = document.getElementById('tab-admin');
+      const roleHelper = document.getElementById('role-helper');
+      const roleDesc = document.getElementById('role-desc');
+      const bottomRegisterContainer = document.getElementById('bottom-register-container');
+      const bottomAdminNote = document.getElementById('bottom-admin-note');
+
+      if (role === 'member') {
+        // Tab UI styling
+        memberBtn.className = "flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs sm:text-sm font-medium transition-all bg-white text-slate-900 shadow-sm border border-slate-200/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20";
+        memberBtn.setAttribute('aria-selected', 'true');
+        memberBtn.querySelector('svg').className = "h-4 w-4 text-brand";
+
+        adminBtn.className = "flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-800 transition-all border border-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500/20";
+        adminBtn.setAttribute('aria-selected', 'false');
+        adminBtn.querySelector('svg').className = "h-4 w-4 text-slate-400";
+
+        // Helper Box Text
+        roleHelper.className = "mb-6 p-3 rounded-lg bg-teal-50/70 border border-teal-100 flex items-start gap-2.5 transition-all";
+        roleDesc.textContent = "Akses untuk reservasi meja kerja, private pod, dan riwayat booking.";
+
+        // Bottom text switch
+        bottomRegisterContainer.innerHTML = 'Belum punya akun Member? <a href="#" class="font-semibold text-brand hover:text-brand-hover hover:underline transition">Daftar Akun Member</a>';
+        bottomAdminNote.classList.remove('hidden');
+      } else {
+        // Tab UI styling for Admin
+        adminBtn.className = "flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs sm:text-sm font-medium transition-all bg-white text-slate-900 shadow-sm border border-slate-200/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20";
+        adminBtn.setAttribute('aria-selected', 'true');
+        adminBtn.querySelector('svg').className = "h-4 w-4 text-brand";
+
+        memberBtn.className = "flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-800 transition-all border border-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500/20";
+        memberBtn.setAttribute('aria-selected', 'false');
+        memberBtn.querySelector('svg').className = "h-4 w-4 text-slate-400";
+
+        // Helper Box Text
+        roleHelper.className = "mb-6 p-3 rounded-lg bg-slate-100 border border-slate-200 flex items-start gap-2.5 transition-all";
+        roleDesc.textContent = "Akses dashboard pengelolaan workstation, audit check-in member, dan analitik pendapatan.";
+
+        // Bottom text switch
+        bottomRegisterContainer.innerHTML = 'Bukan Admin Pengelola? <button type="button" onclick="switchTab(\'member\')" class="font-semibold text-brand hover:text-brand-hover hover:underline transition">Masuk sebagai Member</button>';
+        bottomAdminNote.classList.add('hidden');
+      }
+    }
+
+    // Toggle Password Visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        // eye off svg
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+        `;
+      } else {
+        passwordInput.type = 'password';
+        // standard eye icon
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        `;
+      }
+    }
+  </script>
+<!-- END: InteractiveScripts -->
+</body></html>

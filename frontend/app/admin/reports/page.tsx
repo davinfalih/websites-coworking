@@ -63,14 +63,14 @@ export default function AdminReportsPage() {
   const statusEntries = Object.entries(summary?.status || {});
 
   if (loading) {
-    return <div className="bg-white rounded-2xl border border-amber-100 p-12 text-center text-gray-400 text-sm">Memuat laporan...</div>;
+    return <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-gray-400 text-sm">Memuat laporan...</div>;
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-2xl border border-amber-100 p-12 text-center">
+      <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
         <p className="text-gray-500 text-sm">{error}</p>
-        <button onClick={load} className="mt-4 text-amber-700 font-semibold text-sm hover:underline">
+        <button onClick={load} className="mt-4 text-emerald-700 font-semibold text-sm hover:underline">
           Coba lagi
         </button>
       </div>
@@ -81,8 +81,8 @@ export default function AdminReportsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[#1a120b]">Laporan & Statistik</h1>
-          <p className="text-sm text-gray-500 mt-1">Ringkasan performa reservasi coworking space.</p>
+          <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">Laporan & Statistik</h1>
+          <p className="text-sm text-slate-500 mt-1">Ringkasan performa reservasi coworking space.</p>
         </div>
       </div>
 
@@ -100,8 +100,8 @@ export default function AdminReportsPage() {
           <ActivityChart data={chartData} title="Reservasi per Bulan" />
         </div>
 
-        <div className="bg-white rounded-xl border border-amber-100 p-5">
-          <h3 className="font-serif font-bold text-[#1a120b] text-lg mb-4">Distribusi Status</h3>
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <h3 className="font-semibold text-slate-900 text-lg mb-4">Distribusi Status</h3>
           {statusEntries.length === 0 ? (
             <p className="text-sm text-gray-400 py-6 text-center">Belum ada data</p>
           ) : (
@@ -112,7 +112,7 @@ export default function AdminReportsPage() {
                 return (
                   <div key={key}>
                     <div className="flex justify-between text-xs mb-1.5">
-                      <span className="font-medium text-[#1a120b]">
+                      <span className="font-medium text-slate-900">
                         {{
                           BELUM_DIKONFIRM: 'Belum Dikonfirmasi',
                           DISETUJUI: 'Disetujui',
@@ -125,8 +125,8 @@ export default function AdminReportsPage() {
                         {value} ({pct}%)
                       </span>
                     </div>
-                    <div className="h-2 bg-amber-50 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full" style={{ width: `${pct}%` }} />
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 );
@@ -137,8 +137,8 @@ export default function AdminReportsPage() {
       </div>
 
       {/* Revenue by type */}
-      <div className="bg-white rounded-xl border border-amber-100 p-5">
-        <h3 className="font-serif font-bold text-[#1a120b] text-lg mb-4">Pendapatan per Tipe Space</h3>
+      <div className="bg-white rounded-xl border border-slate-200 p-5">
+        <h3 className="font-semibold text-slate-900 text-lg mb-4">Pendapatan per Tipe Space</h3>
         {byType.length === 0 ? (
           <p className="text-sm text-gray-400 py-6 text-center">Belum ada data</p>
         ) : (
@@ -146,16 +146,16 @@ export default function AdminReportsPage() {
             {byType.map((t) => (
               <div key={t.tipe}>
                 <div className="flex justify-between text-sm mb-1.5">
-                  <span className="flex items-center gap-2 font-medium text-[#1a120b]">
-                    <Building2 className="w-4 h-4 text-amber-600" />
+                  <span className="flex items-center gap-2 font-medium text-slate-900">
+                    <Building2 className="w-4 h-4 text-purple-600" />
                     {SPACE_TYPE_LABEL[t.tipe] || t.label || t.tipe}
                   </span>
                   <span className="text-gray-500">
                     {formatRupiah(t.pendapatan)} • {t.jumlah} reservasi
                   </span>
                 </div>
-                <div className="h-3 bg-amber-50 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-amber-700 to-amber-500 rounded-full transition-all duration-500" style={{ width: `${Math.max((t.pendapatan / maxType) * 100, 3)}%` }} />
+                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full transition-all duration-500" style={{ width: `${Math.max((t.pendapatan / maxType) * 100, 3)}%` }} />
                 </div>
               </div>
             ))}
@@ -164,14 +164,14 @@ export default function AdminReportsPage() {
       </div>
 
       {/* Revenue per month table */}
-      <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
-        <div className="px-5 py-4 border-b border-amber-100">
-          <h3 className="font-serif font-bold text-[#1a120b]">Rincian Pendapatan per Bulan</h3>
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-200">
+          <h3 className="font-semibold text-slate-900 text-lg">Rincian Pendapatan per Bulan</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-amber-100 bg-[#faf6f0] text-left text-xs uppercase tracking-wider text-gray-500">
+              <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wider text-slate-500">
                 <th className="px-5 py-3.5">Bulan</th>
                 <th className="px-5 py-3.5">Jumlah Reservasi</th>
                 <th className="px-5 py-3.5 text-right">Pendapatan</th>
@@ -187,10 +187,10 @@ export default function AdminReportsPage() {
                   const [y, m] = r.bulan.split('-');
                   const monthLabel = `${MONTHS_ID[Number(m) - 1] || m} ${y}`;
                   return (
-                    <tr key={r.bulan} className="border-b border-amber-50 hover:bg-amber-50/40 transition">
-                      <td className="px-5 py-4 font-medium text-[#1a120b]">{monthLabel}</td>
+                    <tr key={r.bulan} className="border-b border-slate-100 hover:bg-slate-50 transition">
+                      <td className="px-5 py-4 font-medium text-slate-900">{monthLabel}</td>
                       <td className="px-5 py-4 text-gray-500">{r.jumlah_reservasi}</td>
-                      <td className="px-5 py-4 text-right font-bold text-amber-700">{formatRupiah(r.pendapatan)}</td>
+                      <td className="px-5 py-4 text-right font-bold text-emerald-700">{formatRupiah(r.pendapatan)}</td>
                     </tr>
                   );
                 })

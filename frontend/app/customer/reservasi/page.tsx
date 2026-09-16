@@ -7,12 +7,20 @@ import { CalendarClock, Search, XCircle, RefreshCw, ChevronRight } from 'lucide-
 import { api, RESERVASI_STATUS_LABEL, formatRupiah, formatDate } from '@/lib/api';
 import type { Reservasi } from '@/types';
 
-const statusColors: Record<string, string> = {
-  BELUM_DIKONFIRM: 'bg-yellow-100 text-yellow-800',
-  DISETUJUI: 'bg-blue-100 text-blue-800',
-  AKTIF: 'bg-purple-100 text-purple-800',
-  SELESAI: 'bg-green-100 text-green-800',
-  DIBATALKAN: 'bg-red-100 text-red-800',
+const statusPill: Record<string, string> = {
+  BELUM_DIKONFIRM: 'bg-amber-100 text-amber-800 border-amber-200',
+  DISETUJUI: 'bg-blue-50 text-blue-800 border-blue-200',
+  AKTIF: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+  SELESAI: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+  DIBATALKAN: 'bg-red-50 text-red-700 border-red-200',
+};
+
+const statusDot: Record<string, string> = {
+  BELUM_DIKONFIRM: 'bg-amber-500',
+  DISETUJUI: 'bg-blue-600',
+  AKTIF: 'bg-emerald-500',
+  SELESAI: 'bg-emerald-500',
+  DIBATALKAN: 'bg-red-500',
 };
 
 const currentMonth = () => new Date().toISOString().slice(0, 7);
@@ -77,42 +85,43 @@ export default function MyReservasiPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-serif font-bold text-[#1a120b]">Reservasi Saya</h1>
-        <p className="text-sm text-gray-500 mt-1">Riwayat dan status reservasi space-mu.</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700 mb-1.5">Member Portal • Riwayat</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Reservasi Saya</h1>
+        <p className="text-sm text-slate-500 mt-1">Riwayat dan status reservasi space-mu.</p>
       </div>
 
       {message && (
-        <div className={`text-sm px-4 py-3 rounded-xl border ${message.type === 'success' ? 'text-green-700 bg-green-50 border-green-100' : 'text-red-600 bg-red-50 border-red-100'}`}>
+        <div className={`text-sm px-4 py-3 rounded-xl border ${message.type === 'success' ? 'text-emerald-700 bg-emerald-50 border-emerald-100' : 'text-red-600 bg-red-50 border-red-100'}`}>
           {message.text}
         </div>
       )}
 
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cari kode atau nama space..." className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-amber-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-sm" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cari kode atau nama space..." className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:border-brand-700 focus:ring-2 focus:ring-brand-500/20 outline-none transition text-sm" />
         </div>
-        <input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="px-4 py-2.5 rounded-xl border border-amber-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-sm text-[#1a120b]" />
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className="px-4 py-2.5 rounded-xl border border-amber-200 bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-sm text-[#1a120b]">
+        <input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:border-brand-700 focus:ring-2 focus:ring-brand-500/20 outline-none transition text-sm text-slate-800" />
+        <select value={status} onChange={(e) => setStatus(e.target.value)} className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:border-brand-700 focus:ring-2 focus:ring-brand-500/20 outline-none transition text-sm text-slate-800">
           <option value="ALL">Semua Status</option>
           {Object.entries(RESERVASI_STATUS_LABEL).map(([k, v]) => (
             <option key={k} value={k}>{v}</option>
           ))}
         </select>
-        <button onClick={() => load(month, status)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-amber-200 text-amber-700 hover:bg-amber-50 text-sm font-medium transition">
+        <button onClick={() => load(month, status)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-sm font-medium transition">
           <RefreshCw className="w-4 h-4" /> Muat Ulang
         </button>
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-2xl border border-amber-100 p-12 text-center text-gray-400 text-sm">Memuat reservasi...</div>
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-gray-400 text-sm">Memuat reservasi...</div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-amber-100 p-12 text-center">
-          <div className="w-14 h-14 mx-auto rounded-full bg-amber-50 flex items-center justify-center mb-4">
-            <CalendarClock className="w-6 h-6 text-amber-600/60" />
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+            <CalendarClock className="w-6 h-6" />
           </div>
           <p className="text-gray-500 text-sm mb-4">Belum ada reservasi pada periode ini.</p>
-          <Link href="/customer/spaces" className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-700 to-amber-600 text-white text-sm font-semibold px-5 py-3 rounded-xl transition hover:from-amber-600 hover:to-amber-500">
+          <Link href="/customer/spaces" className="inline-flex items-center gap-2 bg-brand-700 hover:bg-brand-600 text-white text-sm font-semibold px-5 py-3 rounded-xl transition">
             Jelajahi Space
           </Link>
         </div>
@@ -122,54 +131,53 @@ export default function MyReservasiPage() {
             const firstDetail = r.details?.[0];
             const canCancel = r.status === 'BELUM_DIKONFIRM';
             return (
-              <div key={r.id} className="bg-white rounded-2xl border border-amber-100 overflow-hidden hover:shadow-lg hover:shadow-amber-900/8 transition-all duration-300">
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div>
-                      <Link href={`/customer/reservasi/${r.id}`} className="font-mono font-bold text-sm text-[#1a120b] hover:text-amber-700 transition">
-                        {r.kode_reservasi}
-                      </Link>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        {formatDate(r.tanggal_reservasi)} • {r.jam_mulai}{Number(r.jam_mulai.slice(0, 2)) + r.durasi_jam > 24 ? ' (besok)' : ''} ({r.durasi_jam} jam)
-                      </p>
-                    </div>
-                    <span className={`shrink-0 text-[10px] font-semibold px-2.5 py-1 rounded-md ${statusColors[r.status] || 'bg-gray-100 text-gray-700'}`}>
-                      {RESERVASI_STATUS_LABEL[r.status] || r.status}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br from-[#1a0f08] to-amber-900 flex items-center justify-center shrink-0">
-                      {firstDetail?.space?.foto ? (
-                        <img src={firstDetail.space.foto} alt="" className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-[10px] text-amber-500/60 uppercase tracking-widest">
-                          {firstDetail?.space?.tipe?.slice(0, 2) || 'SP'}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#1a120b] truncate">{firstDetail?.space?.nama_space || '-'}</p>
-                      <p className="text-xs text-gray-400 truncate">{r.owner?.nama_coworking || '-'}</p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-sm font-bold text-amber-700">{formatRupiah(firstDetail?.total_harga || 0)}</p>
-                      {firstDetail?.diskon && (
-                        <p className="text-[10px] text-red-500">Diskon {firstDetail.diskon.persentase_diskon}%</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2 mt-4 pt-3 border-t border-amber-50">
-                    <Link href={`/customer/reservasi/${r.id}`} className="flex-1 flex items-center justify-center gap-1.5 bg-[#faf6f0] hover:bg-amber-50 text-amber-700 text-sm font-medium py-2.5 rounded-xl transition">
-                      Lihat E-Ticket <ChevronRight className="w-4 h-4" />
+              <div key={r.id} className="bg-white rounded-2xl border border-slate-200 p-4 md:p-5 hover:shadow-md transition-all flex flex-col">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <Link href={`/customer/reservasi/${r.id}`} className="font-mono font-semibold text-sm text-slate-900 hover:text-brand-700 transition">
+                      {r.kode_reservasi}
                     </Link>
-                    {canCancel && (
-                      <button onClick={() => cancelReservation(r.id)} disabled={busyId === r.id} className="flex items-center justify-center gap-1.5 border border-red-200 text-red-600 hover:bg-red-50 text-sm font-medium px-4 py-2.5 rounded-xl transition disabled:opacity-50">
-                        <XCircle className="w-4 h-4" /> Batalkan
-                      </button>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {formatDate(r.tanggal_reservasi)} • {r.jam_mulai}{Number(r.jam_mulai.slice(0, 2)) + r.durasi_jam > 24 ? ' (besok)' : ''} ({r.durasi_jam} jam)
+                    </p>
+                  </div>
+                  <span className={`inline-flex h-6 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium shrink-0 ${statusPill[r.status] || 'bg-slate-100 text-slate-700 border-slate-200'}`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${statusDot[r.status] || 'bg-slate-400'}`} />
+                    {RESERVASI_STATUS_LABEL[r.status] || r.status}
+                  </span>
+                </div>
+
+                <div className="mt-3 rounded-xl bg-slate-50 p-3 flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center shrink-0">
+                    {firstDetail?.space?.foto ? (
+                      <img src={firstDetail.space.foto} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-[10px] text-slate-400 uppercase tracking-widest">
+                        {firstDetail?.space?.tipe?.slice(0, 2) || 'SP'}
+                      </span>
                     )}
                   </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-slate-900 truncate">{firstDetail?.space?.nama_space || '-'}</p>
+                    <p className="text-xs text-slate-500 truncate">{r.owner?.nama_coworking || '-'}</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-sm font-bold text-emerald-700">{formatRupiah(firstDetail?.total_harga || 0)}</p>
+                    {firstDetail?.diskon && (
+                      <p className="text-[10px] text-red-600">Diskon {firstDetail.diskon.persentase_diskon}%</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 mt-4 pt-4 border-t border-slate-100">
+                  <Link href={`/customer/reservasi/${r.id}`} className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition bg-brand-700 hover:bg-brand-600 text-white">
+                    Lihat E-Ticket <ChevronRight className="w-4 h-4" />
+                  </Link>
+                  {canCancel && (
+                    <button onClick={() => cancelReservation(r.id)} disabled={busyId === r.id} className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 px-4 py-2 text-sm font-medium transition disabled:opacity-50">
+                      <XCircle className="w-4 h-4" /> Batalkan
+                    </button>
+                  )}
                 </div>
               </div>
             );

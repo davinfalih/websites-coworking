@@ -1,16 +1,24 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/navbar/NavbarWrapper";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 
-const inter = Inter({ subsets: ["latin"] });
-const playfair = Playfair_Display({ subsets: ["latin"] });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = JetBrains_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "Smart Space Booking - Coworking Space",
-  description: "Platform reservasi coworking space yang mudah, cepat, dan terpercaya. Booking personal desk, meeting room, dan private office.",
+  title: "Nexus - Workstation & Booking",
+  description:
+    "Platform reservasi coworking space yang mudah, cepat, dan terpercaya. Booking personal desk, meeting room, dan private office.",
 };
 
 export default function RootLayout({
@@ -20,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={inter.className}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LoadingScreen>
           <NavbarWrapper />
           {children}

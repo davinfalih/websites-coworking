@@ -56,16 +56,17 @@ export default function AddDiskonPage() {
   };
 
   const inputClass =
-    'w-full px-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm';
+    'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition';
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[#1a120b]">Tambah Diskon</h1>
-          <p className="text-sm text-gray-500 mt-1">Buat kode promo potongan harga baru.</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Manajemen Diskon</p>
+          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">Tambah Diskon</h1>
+          <p className="mt-1 text-sm text-slate-500">Buat kode promo potongan harga baru.</p>
         </div>
-        <Link href="/admin/diskon" className="flex items-center gap-2 border border-amber-200 text-gray-600 hover:bg-[#faf6f0] text-sm font-medium px-4 py-2.5 rounded-xl transition">
+        <Link href="/admin/diskon" className="inline-flex items-center justify-center gap-2 border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium px-5 py-2.5 rounded-xl transition">
           <ArrowLeft className="w-4 h-4" /> Kembali
         </Link>
       </div>
@@ -74,38 +75,38 @@ export default function AddDiskonPage() {
         <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>
       )}
 
-      <div className="bg-white rounded-2xl border border-amber-100 p-6 max-w-2xl">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 max-w-2xl shadow-[0_1px_2px_0_rgba(15,23,42,0.04)]">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1.5">Kode Diskon</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Kode Diskon</label>
             <input type="text" value={form.kode_diskon} onChange={(e) => setForm({ ...form, kode_diskon: e.target.value })} placeholder="Contoh: DISKON10" className={`${inputClass} uppercase font-mono`} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1.5">Nama Diskon</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Nama Diskon</label>
             <input type="text" value={form.nama_diskon} onChange={(e) => setForm({ ...form, nama_diskon: e.target.value })} placeholder="Contoh: Promo Grand Opening" className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1.5">Persentase Diskon (%)</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Persentase Diskon (%)</label>
             <div className="relative">
-              <Percent className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input type="number" min={0} max={100} value={form.persentase_diskon} onChange={(e) => setForm({ ...form, persentase_diskon: e.target.value })} placeholder="10" className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm" />
+              <Percent className="w-4 h-4 text-emerald-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input type="number" min={0} max={100} value={form.persentase_diskon} onChange={(e) => setForm({ ...form, persentase_diskon: e.target.value })} placeholder="10" className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Tanggal Awal</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Awal</label>
               <input type="date" value={form.tanggal_awal} onChange={(e) => setForm({ ...form, tanggal_awal: e.target.value })} className={inputClass} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Tanggal Akhir</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Akhir</label>
               <input type="date" value={form.tanggal_akhir} onChange={(e) => setForm({ ...form, tanggal_akhir: e.target.value })} className={inputClass} />
             </div>
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="submit" disabled={saving} className="flex items-center gap-2 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white text-sm font-semibold px-6 py-3 rounded-xl transition disabled:opacity-60 shadow-lg shadow-amber-900/20">
+            <button type="submit" disabled={saving} className="inline-flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold px-6 py-3 rounded-xl transition disabled:opacity-60">
               {saving ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Menyimpan...</> : <><Save className="w-4 h-4" /> Simpan Diskon</>}
             </button>
-            <Link href="/admin/diskon" className="flex items-center gap-2 border border-amber-200 text-gray-600 hover:bg-[#faf6f0] text-sm font-medium px-6 py-3 rounded-xl transition">
+            <Link href="/admin/diskon" className="inline-flex items-center justify-center gap-2 border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium px-6 py-3 rounded-xl transition">
               Batal
             </Link>
           </div>

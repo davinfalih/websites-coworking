@@ -1,34 +1,18 @@
-// app/customer/layout.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import {
-  LayoutGrid,
-  CalendarClock,
-  User,
-  LogOut,
-  Menu,
-  X,
-  Building2,
-} from 'lucide-react';
-import Navbar from '@/components/navbar/Navbar';
-
-const menuItems = [
-  { name: 'Jelajahi Space', icon: LayoutGrid, href: '/customer/spaces' },
-  { name: 'Reservasi Saya', icon: CalendarClock, href: '/customer/reservasi' },
-  { name: 'Profil Saya', icon: User, href: '/customer/profile' },
-  { name: 'Website', icon: Building2, href: '/' },
-];
+import { LayoutGrid, CalendarDays, User } from 'lucide-react';
+import { createClient } from '@/lib/api';
 
 export default function CustomerLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const client = createClient();
   const [memberName, setMemberName] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   useEffect(() => {
     let token: string | null = null;
@@ -46,30 +30,38 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
       return;
     }
 
-    try {
-      const parsed = JSON.parse(userData);
-      if (parsed.role !== 'MEMBER') {
-        router.push('/admin/profile');
+    (async () => {
+      let fallback: string | null = null;
+      try {
+        const parsed = JSON.parse(userData as string);
+        if (parsed.role !== 'MEMBER') {
+          router.push('/admin/profile');
+          return;
+        }
+        fallback = parsed.username || null;
+        setMemberName(fallback);
+      } catch {
+        router.push('/sign-in');
         return;
+      } finally {
+        setLoading(false);
       }
-      setMemberName(parsed.username || null);
-    } catch {
-      router.push('/sign-in');
-    } finally {
-      setLoading(false);
-    }
-  }, [router]);
 
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [pathname]);
+      try {
+        const profile = await client.getMyMemberProfile();
+        setMemberName(profile.nama_member || fallback);
+      } catch {
+        // fallback: nama dari sesi login
+      }
+    })();
+  }, [router, client, pathname]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#faf6f0] flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-amber-800 font-serif">Memuat...</p>
+          <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-emerald-800 font-sans">Memuat...</p>
         </div>
       </div>
     );
@@ -81,56 +73,160 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
     router.push('/sign-in');
   };
 
-  const isProductPage = pathname === '/customer/spaces' || pathname?.startsWith('/customer/spaces/');
-
   return (
-    <div className="min-h-screen bg-[#faf6f0]">
-      <Navbar />
+    <div className="h-full min-h-screen flex flex-col bg-surface-base text-surface-dark antialiased overflow-x-hidden font-sans">
+      
+      {/* TOP HEADER / NAVBAR */}
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
+          
+          {/* Brand Logo */}
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-9 h-9 rounded-xl bg-brand-700 text-white flex items-center justify-center shadow-xs group-hover:bg-brand-800 transition">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                </svg>
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-bold text-lg tracking-tight text-slate-900">Nexus</span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <p className="text-[10px] uppercase font-semibold tracking-wider text-slate-400 -mt-1">Member Portal</p>
+              </div>
+            </Link>
+          </div>
 
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed bottom-4 right-4 z-50 p-3 rounded-full bg-gradient-to-br from-amber-700 to-amber-600 text-white shadow-xl shadow-amber-900/30"
-      >
-        {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-      </button>
-
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      <aside className={`fixed right-0 top-0 z-40 h-full w-72 bg-white border-l border-amber-100 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="p-5 border-b border-amber-100">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white font-bold">
-              {memberName?.charAt(0)?.toUpperCase() || 'M'}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium text-[#1a120b] text-sm truncate">@{memberName || 'Member'}</p>
-              <p className="text-xs text-amber-600">Member</p>
+          {/* Center Search Bar */}
+          <div className="flex-1 max-w-xl hidden md:block">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                </svg>
+              </div>
+              <input 
+                type="text" 
+                placeholder="Cari nama ruang, meja..." 
+                className="w-full pl-10 pr-10 py-2 text-sm bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <span className="text-[11px] font-mono text-slate-400 border border-slate-200 bg-white px-1.5 py-0.5 rounded shadow-2xs">⌘K</span>
+              </div>
             </div>
           </div>
-        </div>
-        <nav className="p-4">
-          {menuItems.map((item) => (
-            <Link key={item.name} href={item.href} className="flex items-center gap-3 px-4 py-3 text-gray-600 rounded-lg hover:bg-amber-50 hover:text-amber-700 transition-colors group mb-1">
-              <item.icon className="w-5 h-5 group-hover:text-amber-600" />
-              <span className="text-sm font-medium">{item.name}</span>
-            </Link>
-          ))}
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-red-600 rounded-lg hover:bg-red-50 transition-colors group mt-4 border-t border-amber-100 pt-4">
-            <LogOut className="w-5 h-5" />
-            <span className="text-sm font-medium">Keluar</span>
-          </button>
-        </nav>
-      </aside>
 
-      <main>
-        {isProductPage ? (
-          children
-        ) : (
-          <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">{children}</div>
-        )}
-      </main>
+          {/* Right Header Actions */}
+          <div className="flex items-center gap-3">
+            <button className="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-brand-700 hover:bg-emerald-50 rounded-lg border border-slate-200 transition">
+              <svg className="w-3.5 h-3.5 text-brand-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>
+              </svg>
+              <span>Pusat Bantuan</span>
+            </button>
+
+            <button className="relative p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition" title="Notifikasi">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+              </svg>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-600 ring-2 ring-white"></span>
+            </button>
+
+            <div className="h-6 w-px bg-slate-200"></div>
+
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} className="flex items-center gap-2.5 p-1.5 pl-2 pr-3 rounded-lg hover:bg-slate-100 border border-slate-200/80 transition text-left focus:outline-none focus:ring-2 focus:ring-brand-700/20">
+                <div className="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-semibold text-xs ring-2 ring-brand-100">
+                  {memberName?.charAt(0).toUpperCase()}
+                </div>
+                <div className="hidden sm:block leading-tight">
+                  <p className="text-xs font-semibold text-slate-800">{memberName}</p>
+                  <p className="text-[11px] text-slate-500 font-mono">Member Verified</p>
+                </div>
+                <svg className="w-4 h-4 text-slate-400 ml-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+
+              {profileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 animate-in fade-in zoom-in-95">
+                  <div className="px-3.5 py-2 border-b border-slate-100">
+                    <p className="text-xs font-semibold text-slate-900">{memberName}</p>
+                    <p className="text-[11px] text-slate-500 truncate">member@smartspace.com</p>
+                    <div className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Membership Aktif
+                    </div>
+                  </div>
+                  <div className="py-1">
+                    <Link href="/customer/profile" onClick={() => setProfileDropdownOpen(false)} className="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">
+                      Profil Akun
+                    </Link>
+                    <Link href="/customer/reservasi" onClick={() => setProfileDropdownOpen(false)} className="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">
+                      Reservasi Saya
+                    </Link>
+                  </div>
+                  <div className="pt-1 border-t border-slate-100">
+                    <button onClick={handleLogout} className="w-full text-left flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition">
+                      Keluar (Logout)
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+      </header>
+
+      {/* BODY WRAPPER: MAIN CONTENT */}
+      <div className="flex-1 flex max-w-[1600px] w-full mx-auto relative">
+        {/* MAIN WORKSPACE CONTENT */}
+        <main className="flex-1 p-4 lg:p-8 pb-32 overflow-y-auto">
+          {children}
+        </main>
+      </div>
+
+      {/* FLOATING GLASS NAVBAR (Navigasi Utama) */}
+      <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 pointer-events-none">
+        <nav className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-white/60 bg-white/70 backdrop-blur-xl shadow-lg shadow-slate-900/10 p-1.5">
+          <Link
+            href="/customer/spaces"
+            className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
+              pathname.includes('/spaces')
+                ? 'bg-brand-700 text-white shadow-md shadow-brand-700/30'
+                : 'text-slate-600 hover:bg-white/90'
+            }`}
+          >
+            <LayoutGrid className="w-4 h-4" />
+            <span>Beranda / Katalog</span>
+          </Link>
+          <Link
+            href="/customer/reservasi"
+            className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
+              pathname.includes('/reservasi')
+                ? 'bg-brand-700 text-white shadow-md shadow-brand-700/30'
+                : 'text-slate-600 hover:bg-white/90'
+            }`}
+          >
+            <CalendarDays className="w-4 h-4" />
+            <span>Reservasi Saya</span>
+          </Link>
+          <Link
+            href="/customer/profile"
+            className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
+              pathname.includes('/profile')
+                ? 'bg-brand-700 text-white shadow-md shadow-brand-700/30'
+                : 'text-slate-600 hover:bg-white/90'
+            }`}
+          >
+            <User className="w-4 h-4" />
+            <span>Profil Member</span>
+          </Link>
+        </nav>
+      </div>
     </div>
   );
 }

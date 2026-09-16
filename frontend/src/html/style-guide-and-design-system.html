@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff","primary":"#005c55","surface-tint":"#006a63","surface-dim":"#d2d9f4","on-secondary-fixed":"#002113","tertiary-container":"#047857","outline":"#6e7977","surface-variant":"#dae2fd","error":"#ba1a1a","on-surface":"#131b2e","on-secondary-container":"#00714d","inverse-on-surface":"#eef0ff","on-tertiary-fixed-variant":"#00513a","on-error-container":"#93000a","on-primary-fixed-variant":"#00504a","on-tertiary-fixed":"#002115","on-tertiary-container":"#9ffdd3","primary-container":"#0f766e","surface-container-highest":"#dae2fd","on-primary-container":"#a3faef","surface-container":"#eaedff","on-primary":"#ffffff","inverse-primary":"#80d5cb","surface-container-lowest":"#ffffff","inverse-surface":"#283044","on-background":"#131b2e","outline-variant":"#bdc9c6","surface-container-high":"#e2e7ff","tertiary":"#005d42","tertiary-fixed":"#97f5cc","secondary":"#006c49","surface-container-low":"#f2f3ff","background":"#faf8ff","on-primary-fixed":"#00201d","on-secondary-fixed-variant":"#005236","secondary-fixed":"#6ffbbe","primary-fixed":"#9cf2e8","error-container":"#ffdad6","tertiary-fixed-dim":"#7bd8b1","secondary-container":"#6cf8bb","secondary-fixed-dim":"#4edea3","on-error":"#ffffff","on-secondary":"#ffffff","surface-bright":"#faf8ff","on-surface-variant":"#3e4947","surface":"#faf8ff","primary-fixed-dim":"#80d5cb"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"2rem","space-sm":"0.5rem","space-xl":"2rem","gutter":"1.5rem","margin-mobile":"1rem","space-md":"1rem","gutter-mobile":"1rem","space-lg":"1.5rem","space-xs":"0.25rem"},fontFamily:{"body-sm":["Geist"],"label-md":["Geist"],"headline-sm":["Geist"],"headline-lg":["Geist"],"headline-xl":["Geist"],"headline-md":["Geist"],"body-md":["Geist"],"code-sm":["JetBrains Mono"],"headline-lg-mobile":["Geist"],"label-sm":["Geist"],"headline-xl-mobile":["Geist"],"body-lg":["Geist"],"title-sm":["Geist"],"title-md":["Geist"]},fontSize:{"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.025em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"code-sm":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"title-sm":["14px",{"lineHeight":"20px","letterSpacing":"-0.005em","fontWeight":"600"}],"title-md":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-7xl mx-auto px-margin flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-xl"><a class="flex items-center gap-space-sm group" data-path="workspace-browse" href="#"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm"><span class="material-symbols-outlined text-[20px]">hub</span></div><span class="font-title-md text-title-md text-on-surface tracking-tight font-semibold">Smart<span class="text-primary">Space</span></span></a><div class="h-4 w-px bg-outline-variant/40 hidden md:block"></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-on-surface font-label-md text-label-md rounded-lg"><a class="px-space-md py-space-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-all" data-path="workspace-browse" href="#">Workspaces</a><a class="px-space-md py-space-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-all" data-path="my-bookings" href="#">Bookings</a><a aria-current="page" class="px-space-md py-space-sm transition-all bg-surface-container text-on-surface font-label-md text-label-md rounded-lg" data-path="style-guide" href="#">Design System</a><a class="px-space-md py-space-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-all" data-path="admin-dashboard" href="#">Admin Console</a></nav></div><div class="flex items-center gap-space-md"><div class="relative hidden sm:block"><span class="material-symbols-outlined absolute left-space-sm top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span><input class="h-9 pl-8 pr- space-md w-56 font-body-sm text-body-sm bg-surface-container-low text-on-surface placeholder:text-outline rounded-lg focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="Quick search desks, rooms..." type="text"/></div><button aria-label="Notifications" class="relative p-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span></button><div class="h-5 w-px bg-outline-variant/40 hidden sm:block"></div><button aria-label="User Profile" class="flex items-center gap-space-sm p-space-xs rounded-lg hover:bg-surface-container-low transition-colors" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-outline text-[18px] hidden sm:block">expand_more</span></button></div></div></header><main class="w-full pt-16 min-h-screen bg-surface"><div class="flex flex-col w-full">
+<!-- Content Canvas: Light Architectural Layout -->
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin py-space-xl space-y-space-xl w-full">
+<!-- 1. Header Pengantar -->
+<section class="space-y-space-md">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        v1.0.0 — Design Foundation
+      </div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+            Smart Space Booking UI Style Guide
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mt-space-xs">
+            Pedoman desain, token visual, dan komponen antarmuka standar modern berbasis shadcn/ui untuk platform reservasi coworking space &amp; workstation berarsitektur tenang dan presisi.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm font-code-sm text-code-sm text-outline">
+<span class="px-space-sm py-1 bg-surface-container rounded">Tokens: Synced</span>
+<span class="px-space-sm py-1 bg-surface-container rounded">Mode: Light Refined</span>
+</div>
+</div>
+<!-- Quick jump navigation pills -->
+<nav aria-label="Styleguide Quick Navigation" class="flex flex-wrap items-center gap-space-xs pt-space-xs">
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container hover:text-primary transition-colors text-label-sm font-label-sm shadow-sm flex items-center gap-1.5" href="#section-colors">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+          Colors
+        </a>
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container hover:text-primary transition-colors text-label-sm font-label-sm shadow-sm flex items-center gap-1.5" href="#section-typography">
+<span class="material-symbols-outlined text-[14px]">text_fields</span>
+          Typography
+        </a>
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container hover:text-primary transition-colors text-label-sm font-label-sm shadow-sm flex items-center gap-1.5" href="#section-badges">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+          Semantic Badges
+        </a>
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container hover:text-primary transition-colors text-label-sm font-label-sm shadow-sm flex items-center gap-1.5" href="#section-components">
+<span class="material-symbols-outlined text-[14px]">widgets</span>
+          UI Components
+        </a>
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container hover:text-primary transition-colors text-label-sm font-label-sm shadow-sm flex items-center gap-1.5" href="#section-forms">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+          Form Elements
+        </a>
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container hover:text-primary transition-colors text-label-sm font-label-sm shadow-sm flex items-center gap-1.5" href="#section-spacing">
+<span class="material-symbols-outlined text-[14px]">grid_goldenratio</span>
+          Spacing &amp; Elevation
+        </a>
+</nav>
+</section>
+<!-- 2. Palet Warna (Color System) -->
+<section class="space-y-space-lg" id="section-colors">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-code-sm text-code-sm text-primary uppercase tracking-widest block font-medium">01 / Foundation</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Color Palette &amp; Functional System</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Atomic Tokens</span>
+</div>
+<!-- Primary Accent: Emerald Scale -->
+<div class="space-y-space-sm">
+<h3 class="font-title-md text-title-md text-on-surface flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-sm bg-primary"></span>
+          Primary Emerald Accent
+        </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Emerald 700 / Main -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow">
+<div class="h-20 rounded-lg bg-[#0F766E] flex items-end p-space-sm shadow-inner">
+<span class="text-white font-code-sm text-code-sm font-medium">#0F766E</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Emerald 700</span>
+<span class="font-code-sm text-code-sm text-outline">primary-main</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tombol CTA utama, status checkout aktif, navbar header accent.</p>
+<code class="font-code-sm text-code-sm text-primary bg-primary-fixed/20 px-1 py-0.5 rounded block w-fit">var(--primary)</code>
+</div>
+</div>
+<!-- Emerald 600 / Hover -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow">
+<div class="h-20 rounded-lg bg-[#059669] flex items-end p-space-sm shadow-inner">
+<span class="text-white font-code-sm text-code-sm font-medium">#059669</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Emerald 600</span>
+<span class="font-code-sm text-code-sm text-outline">primary-hover</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">State hover tombol utama, icon penekanan aktif, interactive toggles.</p>
+<code class="font-code-sm text-code-sm text-primary bg-primary-fixed/20 px-1 py-0.5 rounded block w-fit">var(--primary-hover)</code>
+</div>
+</div>
+<!-- Emerald 500 / Accent Focus -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow">
+<div class="h-20 rounded-lg bg-[#10B981] flex items-end p-space-sm shadow-inner">
+<span class="text-white font-code-sm text-code-sm font-medium">#10B981</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Emerald 500</span>
+<span class="font-code-sm text-code-sm text-outline">primary-focus</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Glow rings, focus indicator form field, live availability pulse dot.</p>
+<code class="font-code-sm text-code-sm text-primary bg-primary-fixed/20 px-1 py-0.5 rounded block w-fit">var(--primary-focus)</code>
+</div>
+</div>
+<!-- Emerald 50 / Light Tint -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow">
+<div class="h-20 rounded-lg bg-[#ECFDF5] flex items-end p-space-sm shadow-inner">
+<span class="text-[#065F46] font-code-sm text-code-sm font-medium">#ECFDF5</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Emerald 50</span>
+<span class="font-code-sm text-code-sm text-outline">primary-surface</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Background slot dipilih pada matrix time schedule, active badge base.</p>
+<code class="font-code-sm text-code-sm text-primary bg-primary-fixed/20 px-1 py-0.5 rounded block w-fit">var(--primary-tint)</code>
+</div>
+</div>
+</div>
+</div>
+<!-- Slate Neutral Palette -->
+<div class="space-y-space-sm">
+<h3 class="font-title-md text-title-md text-on-surface flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-sm bg-outline"></span>
+          Neutrals &amp; Structural Slate
+        </h3>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm">
+<!-- Background -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-sm space-y-2">
+<div class="h-12 rounded bg-[#F8FAFC] shadow-inner"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Background</p>
+<p class="font-code-sm text-code-sm text-outline">#F8FAFC</p>
+<span class="text-[11px] text-on-surface-variant">Layar dasar</span>
+</div>
+</div>
+<!-- Surface -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-sm space-y-2">
+<div class="h-12 rounded bg-[#FFFFFF] shadow-sm"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Surface</p>
+<p class="font-code-sm text-code-sm text-outline">#FFFFFF</p>
+<span class="text-[11px] text-on-surface-variant">Kartu &amp; sheet</span>
+</div>
+</div>
+<!-- Border Light -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-sm space-y-2">
+<div class="h-12 rounded bg-[#E2E8F0]"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Border Light</p>
+<p class="font-code-sm text-code-sm text-outline">#E2E8F0</p>
+<span class="text-[11px] text-on-surface-variant">Pemisah halus</span>
+</div>
+</div>
+<!-- Border Dark -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-sm space-y-2">
+<div class="h-12 rounded bg-[#CBD5E1]"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Border Focus</p>
+<p class="font-code-sm text-code-sm text-outline">#CBD5E1</p>
+<span class="text-[11px] text-on-surface-variant">Hover stroke</span>
+</div>
+</div>
+<!-- Text Muted -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-sm space-y-2">
+<div class="h-12 rounded bg-[#64748B]"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Text Muted</p>
+<p class="font-code-sm text-code-sm text-outline">#64748B</p>
+<span class="text-[11px] text-on-surface-variant">Keterangan/sub</span>
+</div>
+</div>
+<!-- Text Main -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-sm space-y-2">
+<div class="h-12 rounded bg-[#0F172A]"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Text Primary</p>
+<p class="font-code-sm text-code-sm text-outline">#0F172A</p>
+<span class="text-[11px] text-on-surface-variant">Heading &amp; label</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Semantic Status Colors -->
+<div class="space-y-space-sm">
+<h3 class="font-title-md text-title-md text-on-surface flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-sm bg-tertiary"></span>
+          Semantic Reservation Status Colors
+        </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Pending Amber -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Belum Dikonfirmasi</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#D97706]"></span>
+</div>
+<div class="h-10 rounded-lg bg-[#FEF3C7] flex items-center px-space-sm">
+<span class="font-code-sm text-code-sm text-[#92400E]">BG: #FEF3C7 • TXT: #92400E</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FEF3C7] text-[#92400E] text-label-sm font-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D97706]"></span>
+                Pending Review
+              </span>
+<span class="font-code-sm text-code-sm text-outline">amber-100/800</span>
+</div>
+</div>
+<!-- Confirmed Blue -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Disetujui / Confirmed</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span>
+</div>
+<div class="h-10 rounded-lg bg-[#EFF6FF] flex items-center px-space-sm">
+<span class="font-code-sm text-code-sm text-[#1E40AF]">BG: #EFF6FF • TXT: #1E40AF</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#EFF6FF] text-[#1E40AF] text-label-sm font-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#2563EB]"></span>
+                Confirmed Desk
+              </span>
+<span class="font-code-sm text-code-sm text-outline">blue-100/800</span>
+</div>
+</div>
+<!-- Active / Completed Emerald -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Aktif / Selesai</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#059669]"></span>
+</div>
+<div class="h-10 rounded-lg bg-[#ECFDF5] flex items-center px-space-sm">
+<span class="font-code-sm text-code-sm text-[#065F46]">BG: #ECFDF5 • TXT: #065F46</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#ECFDF5] text-[#065F46] text-label-sm font-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>
+                Active Session
+              </span>
+<span class="font-code-sm text-code-sm text-outline">emerald-100/800</span>
+</div>
+</div>
+<!-- Cancelled / Expired Red -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Dibatalkan / Expired</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#DC2626]"></span>
+</div>
+<div class="h-10 rounded-lg bg-[#FEF2F2] flex items-center px-space-sm">
+<span class="font-code-sm text-code-sm text-[#991B1B]">BG: #FEF2F2 • TXT: #991B1B</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FEF2F2] text-[#991B1B] text-label-sm font-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#DC2626]"></span>
+                Booking Cancelled
+              </span>
+<span class="font-code-sm text-code-sm text-outline">rose-100/800</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Tipografi (Typography Scale) -->
+<section class="space-y-space-lg" id="section-typography">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-code-sm text-code-sm text-primary uppercase tracking-widest block font-medium">02 / Typography</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Type Scale &amp; Structural Specimens</h2>
+</div>
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm text-outline">
+<span class="px-2 py-0.5 rounded bg-surface-container">Family: Geist Sans</span>
+<span class="px-2 py-0.5 rounded bg-surface-container">Code: JetBrains Mono</span>
+</div>
+</div>
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden divide-y-0 p-space-lg space-y-space-md">
+<!-- Display / H1 -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Display / H1</span>
+<span class="font-code-sm text-code-sm text-outline block">32px / 2rem • SemiBold 600 • -0.025em</span>
+</div>
+<div class="md:col-span-9">
+<h1 class="font-headline-xl text-headline-xl text-on-surface">
+              Reservasi Meja Kerja &amp; Ruang Meeting
+            </h1>
+</div>
+</div>
+<!-- H2 -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Heading 2</span>
+<span class="font-code-sm text-code-sm text-outline block">24px / 1.5rem • SemiBold 600 • -0.02em</span>
+</div>
+<div class="md:col-span-9">
+<h2 class="font-headline-md text-headline-md text-on-surface">
+              Ketersediaan Coworking Space Hari Ini
+            </h2>
+</div>
+</div>
+<!-- H3 -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Heading 3</span>
+<span class="font-code-sm text-code-sm text-outline block">18px / 1.125rem • Medium 500 • -0.015em</span>
+</div>
+<div class="md:col-span-9">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Dedicated Desk — Lantai 3 Pod Alpha
+            </h3>
+</div>
+</div>
+<!-- H4 / Subtitle -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">H4 / Subtitle</span>
+<span class="font-code-sm text-code-sm text-outline block">16px / 1rem • Medium 500 • -0.01em</span>
+</div>
+<div class="md:col-span-9">
+<h4 class="font-title-md text-title-md text-on-surface">
+              Rincian Fasilitas, Kapasitas &amp; Kuota Listrik
+            </h4>
+</div>
+</div>
+<!-- Body Default -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Body Default</span>
+<span class="font-code-sm text-code-sm text-outline block">14px / 0.875rem • Regular 400 • 1.42</span>
+</div>
+<div class="md:col-span-9">
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl leading-relaxed">
+              Termasuk WiFi gigabit kecepatan 500 Mbps, akses lounge eksekutif, printer laser jaringan nirkabel, dan free-flow kopi single-origin artisan sepanjang jam operasional.
+            </p>
+</div>
+</div>
+<!-- Caption / Muted -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Caption / Muted</span>
+<span class="font-code-sm text-code-sm text-outline block">12px / 0.75rem • Regular 400</span>
+</div>
+<div class="md:col-span-9">
+<p class="font-label-sm text-label-sm text-outline">
+              Terakhir diperbarui 5 menit yang lalu oleh Admin Sistem • ID Sesi: #SSB-9982-JKT
+            </p>
+</div>
+</div>
+<!-- Tabular Nums / Mono -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-baseline py-space-sm">
+<div class="md:col-span-3 space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Tabular Numeric</span>
+<span class="font-code-sm text-code-sm text-outline block">12px / JetBrains Mono • Numeric Alignment</span>
+</div>
+<div class="md:col-span-9">
+<span class="font-code-sm text-code-sm text-primary bg-primary-fixed/20 px-space-sm py-1 rounded inline-block font-medium tracking-tight">
+              Rp 150.000 / hari • 09:00 - 18:00 WIB • Sisa 4 Kursi
+            </span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Komponen shadcn/ui Showcase -->
+<section class="space-y-space-lg" id="section-components">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-code-sm text-code-sm text-primary uppercase tracking-widest block font-medium">03 / UI Primitives</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">shadcn/ui Component Standards</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">WCAG 2.1 AA Compliant</span>
+</div>
+<!-- Buttons Matrix -->
+<div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-title-md text-title-md text-on-surface">Button Variants &amp; Interactive States</h3>
+<span class="font-code-sm text-code-sm text-outline">Radius: 8px (.rounded-lg)</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs">
+<!-- Primary Emerald -->
+<button class="h-10 px-4 rounded-lg bg-primary hover:bg-[#059669] active:scale-[0.99] text-white font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-xs" type="button">
+<span>Pesan Sekarang</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<!-- Secondary Slate -->
+<button class="h-10 px-4 rounded-lg bg-surface-container-high hover:bg-surface-container-highest active:scale-[0.99] text-on-surface font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Cek Denah</span>
+</button>
+<!-- Outline -->
+<button class="h-10 px-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Filter Ruang</span>
+</button>
+<!-- Ghost -->
+<button class="h-10 px-3 rounded-lg hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span>Riwayat</span>
+</button>
+<!-- Destructive -->
+<button class="h-10 px-4 rounded-lg bg-error hover:bg-[#93000a] text-white font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>Batalkan</span>
+</button>
+<!-- Loading Spinner State -->
+<button class="h-10 px-4 rounded-lg bg-primary/70 text-white font-label-md text-label-md flex items-center gap-space-xs cursor-not-allowed shadow-sm" disabled="" type="button">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor"></path>
+</svg>
+<span>Memproses...</span>
+</button>
+<!-- Disabled State -->
+<button class="h-10 px-4 rounded-lg bg-surface-container text-outline font-label-md text-label-md cursor-not-allowed shadow-none" disabled="" type="button">
+            Tidak Tersedia
+          </button>
+</div>
+<!-- Button Sizes -->
+<div class="pt-space-md border-t border-dashed border-outline-variant/30 flex flex-wrap items-center gap-space-md">
+<span class="font-label-sm text-label-sm text-outline w-24">Scale Sizes:</span>
+<!-- sm -->
+<button class="h-8 px-3 rounded-lg bg-primary hover:bg-[#059669] text-white font-label-sm text-label-sm shadow-sm transition-all" type="button">
+            Small (h-8)
+          </button>
+<!-- default -->
+<button class="h-10 px-4 rounded-lg bg-primary hover:bg-[#059669] text-white font-label-md text-label-md shadow-sm transition-all" type="button">
+            Default (h-10)
+          </button>
+<!-- lg -->
+<button class="h-11 px-6 rounded-lg bg-primary hover:bg-[#059669] text-white font-title-sm text-title-sm shadow-sm transition-all" type="button">
+            Large (h-11)
+          </button>
+<!-- icon only -->
+<button aria-label="Quick Action" class="h-9 w-9 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface flex items-center justify-center shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+</button>
+</div>
+</div>
+<!-- Badges Section -->
+<div class="rounded-xl bg-surface-container-lowest p-space-lg shadow-sm space-y-space-md" id="section-badges">
+<div class="flex items-center justify-between">
+<h3 class="font-title-md text-title-md text-on-surface">Semantic Status Badges &amp; Space Tags</h3>
+<span class="font-code-sm text-code-sm text-outline">Compact Pills</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Pending Badge -->
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full bg-[#FEF3C7] text-[#92400E] font-label-sm text-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#D97706]"></span>
+            Belum Dikonfirmasi
+          </span>
+<!-- Approved Badge -->
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full bg-[#EFF6FF] text-[#1E40AF] font-label-sm text-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#2563EB]"></span>
+            Disetujui
+          </span>
+<!-- Active Badge -->
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full bg-[#ECFDF5] text-[#065F46] font-label-sm text-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>
+            Aktif
+          </span>
+<!-- Cancelled Badge -->
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full bg-[#FEF2F2] text-[#991B1B] font-label-sm text-label-sm shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#DC2626]"></span>
+            Dibatalkan
+          </span>
+<!-- Member Prioritas -->
+<span class="inline-flex items-center gap-1 h-6 px-2.5 rounded-full bg-primary-fixed/30 text-primary font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-[14px]">star</span>
+            Member Prioritas
+          </span>
+<!-- Workstation Type Badges -->
+<span class="inline-flex items-center gap-1 h-6 px-2 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-outline">laptop_mac</span>
+            Hot Desk
+          </span>
+<span class="inline-flex items-center gap-1 h-6 px-2 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-outline">domain</span>
+            Private Office
+          </span>
+<span class="inline-flex items-center gap-1 h-6 px-2 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-outline">meeting_room</span>
+            Executive Boardroom
+          </span>
+</div>
+</div>
+</section>
+<!-- 5. Form Inputs & Selects Showcase -->
+<section class="space-y-space-lg" id="section-forms">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-code-sm text-code-sm text-primary uppercase tracking-widest block font-medium">04 / Form Controls</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Input Fields, Date Selectors &amp; Dropdowns</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Focus Ring: Emerald-500</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Input Text Default -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-xs">
+<label class="block font-label-md text-label-md text-on-surface">Nama Lengkap</label>
+<div class="relative">
+<input class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all shadow-sm" type="text" value="Budi Santoso"/>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Sesuai KTP / Akun Korporat</span>
+</div>
+<!-- Input with Search Icon -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-xs">
+<label class="block font-label-md text-label-md text-on-surface">Pencarian Cepat</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all shadow-sm" placeholder="Cari ruangan atau tanggal..." type="text"/>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Keyword nama pod, lantai, fasilitas</span>
+</div>
+<!-- Select Dropdown -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-xs">
+<label class="block font-label-md text-label-md text-on-surface">Tipe Ruangan</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all shadow-sm cursor-pointer">
+<option>Meeting Room (8-10 Orang)</option>
+<option>Focus Pod (1 Orang)</option>
+<option>Team Suite (4-6 Orang)</option>
+<option>Event Stage (30+ Orang)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Filter sesuai kapasitas tamu</span>
+</div>
+<!-- Date Picker Input Preview -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-xs">
+<label class="block font-label-md text-label-md text-on-surface">Tanggal Reservasi</label>
+<div class="relative flex items-center">
+<button class="w-full h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-between hover:bg-surface-container transition-colors shadow-sm text-left" type="button">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">calendar_today</span>
+<span class="font-medium">24 Okt 2025</span>
+</span>
+<span class="font-code-sm text-code-sm text-outline">Jumat</span>
+</button>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Slot aktif: 08:00 - 20:00 WIB</span>
+</div>
+</div>
+</section>
+<!-- 6. Real-World Mock Containers: Room Card & Metrics -->
+<section class="space-y-space-lg">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-code-sm text-code-sm text-primary uppercase tracking-widest block font-medium">05 / Application Patterns</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Card Modules &amp; Dashboard Analytics</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Composed Organisms</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Room Mock Card (Desktop 7 cols) -->
+<div class="lg:col-span-7 rounded-2xl bg-surface-container-lowest p-space-md md:p-space-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<!-- Workspace Visual Placeholder with contextual generation data-alt -->
+<div class="relative h-56 rounded-xl overflow-hidden bg-cover bg-center shadow-inner" data-alt="A sunlit, minimalist executive coworking focus pod with acoustic oak wood panelling, an ergonomic black desk chair, dual 27-inch monitors, and a potted monstera plant. Professional architectural photography, modern Scandinavian workspace aesthetic, warm natural daylight with subtle emerald accent lighting in the background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD9u5sEnWkD4qOdWBjgo-jhYMw5JmawExVA_DDvXJp-9S__yJkRozkntQvETIv9vGDs6ty_XMCnCjqrLHFMMssnKanT0mdkryX2AIc0KdQDFz0FWszFgLN_l46fYJS45AxZDoAHXo2K9_HdomLpEYVwqSPAmNzA4CpMkTXjgPJh2s_4KZoabEhbkUog3ScJ9wldnfQlazQcglI1C7dnSMWNp6_pp_6STyDqCF9Q8Fr0oqU1lnhGiQOn5A')">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+<!-- Top Floating Pills -->
+<div class="absolute top-3 left-3 flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[#065F46] font-label-sm text-label-sm shadow-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Tersedia
+                </span>
+<span class="px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white font-label-sm text-label-sm">
+                  Lantai 2, Wing Timur
+                </span>
+</div>
+<!-- Bottom Price Label on Image -->
+<div class="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
+<div>
+<p class="font-label-sm text-label-sm text-white/80 uppercase tracking-wide">Tarif Reguler</p>
+<p class="font-headline-sm text-headline-sm font-semibold text-white">Rp 75.000 <span class="font-body-sm text-body-sm font-normal text-white/90">/ jam</span></p>
+</div>
+<div class="flex items-center gap-1 bg-white/20 backdrop-blur-md px-2 py-1 rounded-md text-white font-code-sm text-code-sm">
+<span class="material-symbols-outlined text-[14px]">star</span>
+                  4.9 (42 ulasan)
+                </div>
+</div>
+</div>
+<!-- Content Details -->
+<div class="mt-space-md space-y-space-sm">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Focus Pod Alpha — Soundproof Suite</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Dirancang untuk deep work, panggilan video rahasia, atau sesi coding fokus tinggi tanpa distraksi.</p>
+</div>
+</div>
+<!-- Facility Chips -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">wifi</span>
+                  WiFi 500Mbps
+                </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">ac_unit</span>
+                  AC Sentral
+                </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">draw</span>
+                  Whiteboard
+                </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">coffee</span>
+                  Free Kopi Single-Origin
+                </span>
+</div>
+</div>
+</div>
+<!-- Bottom Action Bar -->
+<div class="mt-space-lg pt-space-md border-t border-dashed border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Instant Confirmation</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="h-10 px-4 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors" type="button">
+                Detail Pod
+              </button>
+<button class="h-10 px-5 rounded-lg bg-primary hover:bg-[#059669] text-white font-label-md text-label-md shadow-sm transition-all flex items-center gap-1" type="button">
+<span>Pesan Sekarang</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Metric Cards (Desktop 5 cols) -->
+<div class="lg:col-span-5 space-y-space-md flex flex-col justify-between">
+<!-- Total Reservasi -->
+<div class="p-space-lg rounded-2xl bg-surface-container-lowest shadow-sm flex items-start justify-between">
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Total Reservasi Hari Ini</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold">128</span>
+<span class="inline-flex items-center text-label-sm font-label-sm text-secondary gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                  +14% vs kemarin
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kombinasi hot desk &amp; meeting pods terdaftar aktif.</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-primary-fixed/30 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">calendar_month</span>
+</div>
+</div>
+<!-- Revenue Hari Ini -->
+<div class="p-space-lg rounded-2xl bg-surface-container-lowest shadow-sm flex items-start justify-between">
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Gross Revenue (Harian)</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">Rp 4.850.000</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Transaksi terverifikasi via QRIS &amp; transfer korporat.</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+</div>
+<!-- Okupansi Workspace dengan Progress Bar -->
+<div class="p-space-lg rounded-2xl bg-surface-container-lowest shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block">Tingkat Okupansi Ruang</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">84%</span>
+</div>
+<span class="px-2 py-1 rounded bg-[#ECFDF5] text-[#065F46] font-code-sm text-code-sm font-medium">
+                Kategori Sibuk
+              </span>
+</div>
+<!-- Visual Progress Bar -->
+<div class="w-full h-2.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 84%"></div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Kapasitas: 42 / 50 Meja Terisi</span>
+<span>8 Kursi Siap Pakai</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Spacing Scale, Border Radius & Elevation -->
+<section class="space-y-space-lg" id="section-spacing">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-code-sm text-code-sm text-primary uppercase tracking-widest block font-medium">06 / Geometry &amp; Depth</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Spacing Scale, Corner Radii &amp; Elevation</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">8px Grid Rhythm</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Spacing Tokens -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-title-sm text-title-sm text-on-surface">Spacing Scale</h3>
+<span class="font-code-sm text-code-sm text-outline">Base 4px / 8px</span>
+</div>
+<div class="space-y-2 pt-2">
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-on-surface">p-1 (4px)</span>
+<div class="h-3 bg-primary/40 rounded" style="width: 4px"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-on-surface">p-2 (8px)</span>
+<div class="h-3 bg-primary/50 rounded" style="width: 8px"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-on-surface">p-3 (12px)</span>
+<div class="h-3 bg-primary/60 rounded" style="width: 12px"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-on-surface">p-4 (16px)</span>
+<div class="h-3 bg-primary/70 rounded" style="width: 16px"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-on-surface">p-6 (24px)</span>
+<div class="h-3 bg-primary/80 rounded" style="width: 24px"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-on-surface">p-8 (32px)</span>
+<div class="h-3 bg-primary rounded" style="width: 32px"></div>
+</div>
+</div>
+</div>
+<!-- Border Radius Standards -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-title-sm text-title-sm text-on-surface">Border Radius</h3>
+<span class="font-code-sm text-code-sm text-outline">Consistent Curves</span>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-2">
+<div class="p-2.5 rounded-md bg-surface-container-low text-center">
+<span class="font-code-sm text-code-sm text-on-surface block font-medium">rounded-md</span>
+<span class="text-[11px] text-outline">6px • Badges</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low text-center">
+<span class="font-code-sm text-code-sm text-on-surface block font-medium">rounded-lg</span>
+<span class="text-[11px] text-outline">8px • Inputs &amp; Btn</span>
+</div>
+<div class="p-2.5 rounded-xl bg-surface-container-low text-center">
+<span class="font-code-sm text-code-sm text-on-surface block font-medium">rounded-xl</span>
+<span class="text-[11px] text-outline">12px • Sub-cards</span>
+</div>
+<div class="p-2.5 rounded-2xl bg-surface-container-low text-center">
+<span class="font-code-sm text-code-sm text-on-surface block font-medium">rounded-2xl</span>
+<span class="text-[11px] text-outline">16px • Main Containers</span>
+</div>
+</div>
+</div>
+<!-- Elevation & Shadows -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-title-sm text-title-sm text-on-surface">Elevation Depth</h3>
+<span class="font-code-sm text-code-sm text-outline">Paper-like</span>
+</div>
+<div class="space-y-2 pt-1">
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-none flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface">Flat (L0)</span>
+<span class="font-code-sm text-code-sm text-outline">No Shadow</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface">shadow-sm (L1)</span>
+<span class="font-code-sm text-code-sm text-outline">Default Card</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-md flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface">shadow-md (L2)</span>
+<span class="font-code-sm text-code-sm text-outline">Hover State / Dropdown</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-xl flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface">shadow-lg/xl (L3)</span>
+<span class="font-code-sm text-code-sm text-outline">Modal &amp; Popover</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Meta Strip -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm text-outline">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span>Smart Space Booking System — UI Guidelines Verified against Tailwind v3 &amp; Web Standards.</span>
+</div>
+<div class="flex items-center gap-4">
+<span>Encoding: UTF-8</span>
+<span>Version: 1.0.0-PROD</span>
+</div>
+</div>
+</div>
+</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.02)] mt-space-xl"><div class="max-w-7xl mx-auto px-margin py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary"><span class="material-symbols-outlined text-[14px]">hub</span></div><span class="font-title-sm text-title-sm text-on-surface">SmartSpace Platform</span><span class="font-label-sm text-label-sm text-outline ml-space-sm">v2.4.0</span></div><div class="flex items-center gap-space-lg"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="style-guide" href="#">Design Guidelines</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="workspace-browse" href="#">Desk Directory</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-terms" href="#">Privacy &amp; Policy</a></div><div class="font-label-sm text-label-sm text-outline">© 2025 SmartSpace Systems. All rights reserved.</div></div></footer></body></html>

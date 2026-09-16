@@ -98,22 +98,6 @@ export const api = {
     if (!res.ok) throw new Error(data.message || 'Registrasi gagal');
   },
 
-  async registerOwner(payload: {
-    username: string;
-    password: string;
-    nama_coworking: string;
-    nama_pemilik: string;
-    telp?: string;
-  }): Promise<void> {
-    const res = await fetch(`${API_URL}/auth/register/owner`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Registrasi gagal');
-  },
-
   // ─── MEMBERS ───
   async getMyMemberProfile(): Promise<Member> {
     return unwrap(await authFetch<ApiResponse<Member>>('/members/me'));

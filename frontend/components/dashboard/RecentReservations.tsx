@@ -21,10 +21,10 @@ const formatDate = (dateStr: string) =>
   new Date(dateStr).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
 
 export const RecentReservations = ({ reservations }: RecentReservationsProps) => (
-  <div className="bg-white rounded-xl border border-amber-100 p-5">
+  <div className="bg-white rounded-2xl border border-slate-200 p-5">
     <div className="flex items-center justify-between mb-4">
-      <h3 className="font-serif font-bold text-[#1a120b] text-lg">Reservasi Terbaru</h3>
-      <Link href="/admin/reservasi" className="text-xs text-amber-600 hover:text-amber-700 font-medium flex items-center gap-0.5">
+      <h3 className="font-semibold text-slate-900 text-lg">Reservasi Terbaru</h3>
+      <Link href="/admin/reservasi" className="text-xs text-emerald-700 hover:text-emerald-800 font-medium flex items-center gap-0.5">
         Lihat semua <ChevronRight className="w-3 h-3" />
       </Link>
     </div>
@@ -37,17 +37,17 @@ export const RecentReservations = ({ reservations }: RecentReservationsProps) =>
           const firstDetail = r.details?.[0];
           return (
             <div key={r.id} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-700 font-bold text-xs shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-xs shrink-0">
                 {r.kode_reservasi.slice(-4)}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#1a120b] truncate">
+                <p className="text-sm font-semibold text-slate-900 truncate">
                   {firstDetail?.space?.nama_space || 'Space reservasi'}
                 </p>
                 <p className="text-[11px] text-gray-400 flex items-center gap-1">
                   <MapPin className="w-3 h-3" />
                   {r.owner?.nama_coworking || ''} • {formatDate(r.tanggal_reservasi)} • {r.jam_mulai}
-                  {r.durasi_jam > 1 ? `-${Number(r.jam_mulai.slice(0,2)) + r.durasi_jam}:00` : ''}
+                  {r.durasi_jam > 1 ? `-${Number(r.jam_mulai.slice(0, 2)) + r.durasi_jam}:00` : ''}
                 </p>
               </div>
               <span className={`text-[10px] font-semibold px-2 py-1 rounded-md ${statusColors[r.status] || 'bg-gray-100 text-gray-700'}`}>

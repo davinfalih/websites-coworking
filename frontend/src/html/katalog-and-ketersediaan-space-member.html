@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartSpace - Katalog & Ketersediaan Space</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ECFDF5',
+              100: '#D1FAE5',
+              200: '#A7F3D0',
+              500: '#10B981',
+              600: '#059669',
+              700: '#0F766E',
+              800: '#115E59',
+              900: '#134E4A',
+            },
+            surface: {
+              base: '#F8FAFC',
+              card: '#FFFFFF',
+              dark: '#0F172A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Geist', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col bg-[#F8FAFC] text-[#0F172A] antialiased overflow-x-hidden">
+
+  <!-- TOP HEADER / NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+    <div class="max-w-[1600px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-700 text-white flex items-center justify-center shadow-xs group-hover:bg-brand-800 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-lg tracking-tight text-slate-900">SmartSpace</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            </div>
+            <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400 -mt-1">Member Portal</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Center Search Bar -->
+      <div class="flex-1 max-w-xl">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+            </svg>
+          </div>
+          <input 
+            type="text" 
+            placeholder="Cari nama ruang, meja, tipe pod, atau fasilitas (misal: Silent Pod, Meeting Room)..." 
+            class="w-full pl-10 pr-10 py-2 text-sm bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition"
+          >
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <span class="text-[11px] font-mono text-slate-400 border border-slate-200 bg-white px-1.5 py-0.5 rounded shadow-2xs">⌘K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Header Actions (Notifikasi & Avatar Dropdown) -->
+      <div class="flex items-center gap-3">
+        <!-- Quick Support / Help -->
+        <button class="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-brand-700 hover:bg-emerald-50 rounded-lg border border-slate-200 transition">
+          <svg class="w-3.5 h-3.5 text-brand-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>
+          </svg>
+          <span>Pusat Bantuan</span>
+        </button>
+
+        <!-- Notification Bell with Ping -->
+        <button class="relative p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition" title="Notifikasi">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+          </svg>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-600 ring-2 ring-white"></span>
+        </button>
+
+        <div class="h-6 w-px bg-slate-200"></div>
+
+        <!-- User Profile Avatar with dropdown state preview -->
+        <div class="relative" id="profileDropdownContainer">
+          <button id="profileDropdownBtn" onclick="toggleDropdown()" class="flex items-center gap-2.5 p-1.5 pl-2 pr-3 rounded-lg hover:bg-slate-100 border border-slate-200/80 transition text-left focus:outline-none focus:ring-2 focus:ring-brand-700/20">
+            <div class="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-semibold text-xs ring-2 ring-brand-100">
+              BS
+            </div>
+            <div class="hidden sm:block leading-tight">
+              <p class="text-xs font-semibold text-slate-800">Budi Santoso</p>
+              <p class="text-[11px] text-slate-500 font-mono">Member Verified</p>
+            </div>
+            <svg class="w-4 h-4 text-slate-400 ml-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+
+          <!-- Dropdown Menu (shadcn style Popover) -->
+          <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 animate-in fade-in zoom-in-95">
+            <div class="px-3.5 py-2 border-b border-slate-100">
+              <p class="text-xs font-semibold text-slate-900">Budi Santoso</p>
+              <p class="text-[11px] text-slate-500 truncate">budi.santoso@email.com</p>
+              <div class="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Membership Aktif
+              </div>
+            </div>
+
+            <div class="py-1">
+              <a href="#" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                </svg>
+                Profil Akun
+              </a>
+              <a href="#" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+                </svg>
+                Reservasi Saya
+                <span class="ml-auto bg-brand-50 text-brand-700 font-semibold text-[10px] px-1.5 py-0.5 rounded-full border border-brand-200">2 Aktif</span>
+              </a>
+              <a href="#" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-700 transition">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Histori Transaksi
+              </a>
+            </div>
+
+            <div class="pt-1 border-t border-slate-100">
+              <a href="#" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition">
+                <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
+                </svg>
+                Keluar (Logout)
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY WRAPPER: SIDEBAR + MAIN CONTENT -->
+  <div class="flex-1 flex max-w-[1600px] w-full mx-auto">
+    
+    <!-- LEFT SLIM SIDEBAR (MENU MEMBER) -->
+    <aside class="w-64 shrink-0 bg-white border-r border-slate-200 p-4 hidden md:flex flex-col justify-between">
+      <div class="space-y-6">
+        
+        <!-- Member Quick Overview Badge -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
+          <div class="flex items-center gap-2 text-slate-500 text-xs mb-1">
+            <svg class="w-3.5 h-3.5 text-brand-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+            </svg>
+            <span class="font-medium">Lokasi Aktif:</span>
+          </div>
+          <p class="text-xs font-semibold text-slate-800">SmartSpace SCBD Hub</p>
+          <p class="text-[11px] text-slate-500">Lt. 14, Tower Equity Jakarta</p>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="space-y-1.5">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 px-3 mb-2">Navigasi Utama</p>
+
+          <!-- Beranda / Katalog (ACTIVE) -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold bg-emerald-50 text-brand-700 border border-emerald-200/60 shadow-2xs transition">
+            <svg class="w-4 h-4 text-brand-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+            </svg>
+            <span>Beranda / Katalog</span>
+            <span class="ml-auto w-1.5 h-1.5 rounded-full bg-brand-600"></span>
+          </a>
+
+          <!-- Reservasi Saya -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"/>
+            </svg>
+            <span>Reservasi Saya</span>
+            <span class="ml-auto bg-slate-100 text-slate-600 font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full">2</span>
+          </a>
+
+          <!-- Histori -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>Histori Transaksi</span>
+          </a>
+
+          <!-- Profil -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <span>Profil Member</span>
+          </a>
+        </nav>
+
+        <!-- Pass Card Member Widget -->
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-3.5 text-white shadow-sm border border-slate-700/60">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-mono tracking-wider text-emerald-400 uppercase font-semibold">Smart Pass • QR Ready</span>
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
+            </svg>
+          </div>
+          <p class="text-xs text-slate-200 mb-2">Check-in pintu otomatis & akses WiFi gigabit dengan scan QR.</p>
+          <button class="w-full py-1.5 px-3 bg-brand-700 hover:bg-brand-600 rounded-lg text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+            </svg>
+            Tampilkan Kartu QR
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Status & Version -->
+      <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Gate Access Online
+        </span>
+        <span class="font-mono">v1.2.0</span>
+      </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE CONTENT -->
+    <main class="flex-1 p-4 lg:p-8 overflow-y-auto">
+      
+      <!-- HERO & TITLE BANNER -->
+      <div class="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-brand-700 border border-emerald-200">
+              🌿 Ruang Kerja Siap Dipesan
+            </span>
+            <span class="text-xs text-slate-400">•</span>
+            <span class="text-xs text-slate-500">Update langsung per detik ini</span>
+          </div>
+          <h1 class="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900">
+            Katalog & Ketersediaan Ruang Kerja
+          </h1>
+          <p class="text-sm text-slate-500 mt-1">
+            Pilih workstation tenang, focus pod kedap suara, atau ruang meeting representatif untuk kebutuhan produktif Anda.
+          </p>
+        </div>
+
+        <!-- Quick Summary Metrics -->
+        <div class="flex items-center gap-3 shrink-0">
+          <div class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 shadow-2xs">
+            <p class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Total Slot Tersedia</p>
+            <p class="text-lg font-bold text-slate-800 font-mono">18 <span class="text-xs font-normal text-emerald-600">Unit Siap Pakai</span></p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 shadow-2xs">
+            <p class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Waktu Buka Hub</p>
+            <p class="text-lg font-bold text-slate-800 font-mono">24 Jam <span class="text-xs font-normal text-slate-400">Non-Stop</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER CONTROLS & DATE/TIME PICKER BAR (SHADCN BAR PATTERN) -->
+      <section class="bg-white rounded-2xl border border-slate-200 p-4 lg:p-5 shadow-xs mb-8">
+        
+        <!-- Row 1: Filter Tab Horizontal (Tipe Space) -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+          <div class="flex items-center gap-1.5 bg-slate-100/80 p-1 rounded-xl">
+            <!-- Tab: Semua (Active) -->
+            <button class="px-4 py-2 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-xs border border-slate-200/60 transition flex items-center gap-1.5">
+              <span>Semua Ruangan</span>
+              <span class="bg-brand-50 text-brand-700 text-[10px] font-mono px-1.5 py-0.5 rounded-full font-bold">18</span>
+            </button>
+            <!-- Tab: Personal Desk -->
+            <button class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition flex items-center gap-1.5">
+              <span>Personal Desk</span>
+              <span class="bg-slate-200/70 text-slate-600 text-[10px] font-mono px-1.5 py-0.5 rounded-full">8</span>
+            </button>
+            <!-- Tab: Private Office -->
+            <button class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition flex items-center gap-1.5">
+              <span>Private Office</span>
+              <span class="bg-slate-200/70 text-slate-600 text-[10px] font-mono px-1.5 py-0.5 rounded-full">4</span>
+            </button>
+            <!-- Tab: Meeting Room -->
+            <button class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition flex items-center gap-1.5">
+              <span>Meeting Room</span>
+              <span class="bg-slate-200/70 text-slate-600 text-[10px] font-mono px-1.5 py-0.5 rounded-full">6</span>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-1">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Tersedia
+            </span>
+            <span class="inline-flex items-center gap-1 ml-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Sisa Sedikit
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 2: Date Picker, Time Picker, & Quick Availability Action -->
+        <div class="pt-4 grid grid-cols-1 md:grid-cols-12 gap-3.5 items-end">
+          
+          <!-- Tanggal Reservasi (Date Picker) -->
+          <div class="md:col-span-4">
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Tanggal Reservasi
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4 text-brand-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+                </svg>
+              </div>
+              <input 
+                type="date" 
+                value="2025-10-24" 
+                class="w-full pl-9 pr-3 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition"
+              >
+            </div>
+          </div>
+
+          <!-- Waktu Mulai (Time Picker) -->
+          <div class="md:col-span-3">
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Jam Mulai
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <select class="w-full pl-9 pr-8 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 appearance-none transition">
+                <option value="09:00">09:00 WIB (Pagi)</option>
+                <option value="10:00">10:00 WIB</option>
+                <option value="11:00">11:00 WIB</option>
+                <option value="13:00">13:00 WIB (Siang)</option>
+                <option value="14:00">14:00 WIB</option>
+                <option value="18:00">18:00 WIB (Malam)</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Durasi Pemakaian -->
+          <div class="md:col-span-3">
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+              Durasi Sewa
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/>
+                </svg>
+              </div>
+              <select class="w-full pl-9 pr-8 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 appearance-none transition">
+                <option value="2">2 Jam (Fleksibel)</option>
+                <option value="4">4 Jam (Setengah Hari)</option>
+                <option value="8">8 Jam (Full Day Pass)</option>
+                <option value="1">1 Jam (Singkat)</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tombol Terapkan Cek Ketersediaan -->
+          <div class="md:col-span-2">
+            <button class="w-full py-2 px-4 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+              </svg>
+              Cek Slot
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- MAIN CONTENT: GRID CARD SPACE (3 KOLOM DESKTOP) -->
+      <section class="space-y-4">
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h2 class="text-base font-bold text-slate-800">Daftar Ruang & Meja Tersedia</h2>
+            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono font-medium">6 Pilihan Terbaik</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-slate-500">
+            <span>Urutkan:</span>
+            <select class="bg-transparent font-semibold text-slate-700 border-none focus:outline-none cursor-pointer">
+              <option>Rekomendasi Terbaik</option>
+              <option>Harga: Terendah ke Tertinggi</option>
+              <option>Kapasitas Terbesar</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3-COLUMN DESKTOP GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- CARD 1: Focus Pod Alpha (Personal Desk / Booth) -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition group flex flex-col justify-between">
+            <div>
+              <!-- Photo Container -->
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8DpJLFzhUTGx8Wm_6i9EhqOnIde-Br1Vdtvt1U1Q4OizLz0wrC5A4bEzKwcu5SmwUyPfOA7tcGU1zfp_xwarzQEF9LUOtsucFjhVo4L6LyHHFc83cVBYYPDfKAaBXvSN6eqfllLekWy6q23anxgEOBbet76PlU65d_1SaFBxrAi9WgiJ5EiaHbMIGdA0fGEHjuWerPgJJdLVVKfYq19Loqjvx4pgKEXB9HR36y40LwdusP-MoLrkqNw" 
+                  alt="Focus Pod Alpha" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                >
+                <!-- Availability & Type Badges -->
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600 text-white shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                    Tersedia
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-900/80 backdrop-blur-xs text-white">
+                    Personal Desk
+                  </span>
+                </div>
+                <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md text-[11px] font-medium text-slate-700 shadow-2xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span>4.9 (42 ulasan)</span>
+                </div>
+              </div>
+
+              <!-- Body Info -->
+              <div class="p-5">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-700 transition">
+                      Focus Pod Alpha — Soundproof Suite
+                    </h3>
+                    <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      Lantai 2, Wing Timur (Quiet Zone)
+                    </p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+                  Pod kedap suara akustik khusus telepon rahasia, coding intensif, atau remote meeting tanpa kebisingan ruang luar.
+                </p>
+
+                <!-- Spesifikasi Chips (Kapasitas & Fasilitas) -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                  <!-- Kapasitas (Icon Orang + Angka) -->
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-brand-800 border border-emerald-200">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                    </svg>
+                    1 Orang
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    ⚡ Power Outlet
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    📶 WiFi 500Mbps
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Pricing & Action -->
+            <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Tarif Sewa</p>
+                <p class="text-lg font-bold text-slate-900 font-mono">
+                  Rp 35.000 <span class="text-xs font-normal text-slate-500 font-sans">/ jam</span>
+                </p>
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                <span>Lihat Detail</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 2: Executive Boardroom Horizon (Meeting Room) -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition group flex flex-col justify-between">
+            <div>
+              <!-- Photo Container -->
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzNV0vbRGQt4XPsjDlS2oRvj51DpQzq8vuJN4WHA5Xcvgu4Eun9mR1GxCA9rQrgPdqsbCHemquFv5FpeJb72iukL5QLJ3SioRt0fsvdToKQgVnBzwUJjXxqG8slEGjPN4QQcjp_NZlGIFFGyPOR0ngVGUIhvaChiYK8Bq-8wrcOx_J98MnHQchpyloAUsiSbTkNmVLGO4iDJ1E3yNd5fjUuaAqVGCEq_AgHF3c1xw-7Aw0YNp-MebBxw" 
+                  alt="Executive Boardroom Horizon" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                >
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600 text-white shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                    Tersedia
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-900/80 backdrop-blur-xs text-white">
+                    Meeting Room
+                  </span>
+                </div>
+                <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md text-[11px] font-medium text-slate-700 shadow-2xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span>4.9 (68 ulasan)</span>
+                </div>
+              </div>
+
+              <!-- Body Info -->
+              <div class="p-5">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-700 transition">
+                      Executive Boardroom Horizon
+                    </h3>
+                    <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      Lantai 3, Corner Suite View Kota
+                    </p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+                  Ruang rapat formal lengkap dengan smart TV 65", konferensi video hybrid 4K, papan tulis kaca, dan meja kayu jati elegan.
+                </p>
+
+                <!-- Spesifikasi Chips (Kapasitas & Fasilitas) -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                  <!-- Kapasitas (Icon Orang + Angka) -->
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-brand-800 border border-emerald-200">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                    </svg>
+                    8-10 Orang
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    📺 4K Smart Display
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    ☕ Free Flow Coffee
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Pricing & Action -->
+            <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Tarif Sewa</p>
+                <p class="text-lg font-bold text-slate-900 font-mono">
+                  Rp 180.000 <span class="text-xs font-normal text-slate-500 font-sans">/ jam</span>
+                </p>
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                <span>Lihat Detail</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 3: Open Dedicated Desk (Personal Desk) -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition group flex flex-col justify-between">
+            <div>
+              <!-- Photo Container -->
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/aida/AEtjO1VEtup4i2YFNalLKN4roWpJhvhUvyC3oZdfsJo0LRLW-wSIooCcldCks9jydeJ9OfDlGQ_n9DiYZOWIsao6y9kXNqITLgzo2GU5qdxx5K59ZxujpQZA38lcW36wWPu6Fu82690VEkj06MRE43at8Ep71a6ohgJXUBPc5pr9lwhYD58wltk5I6htbnNh_hfR3OrspJ41vEoiqQGixNuIj7huGl2kCXol_j44OyX2TvryuSvfx_x_6l8cJDxj" 
+                  alt="Open Dedicated Desk Garden Area" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                >
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600 text-white shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                    Tersedia
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-900/80 backdrop-blur-xs text-white">
+                    Personal Desk
+                  </span>
+                </div>
+                <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md text-[11px] font-medium text-slate-700 shadow-2xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span>4.8 (115 ulasan)</span>
+                </div>
+              </div>
+
+              <!-- Body Info -->
+              <div class="p-5">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-700 transition">
+                      Dedicated Desk — Daylight Garden
+                    </h3>
+                    <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      Lantai 1, Main Communal Hall
+                    </p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+                  Meja kayu solid lebar dengan pencahayaan alami kaca atrium tinggi, kursi ergonomis Herman Miller, dan suasana asri.
+                </p>
+
+                <!-- Spesifikasi Chips (Kapasitas & Fasilitas) -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                  <!-- Kapasitas (Icon Orang + Angka) -->
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-brand-800 border border-emerald-200">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                    </svg>
+                    1 Orang
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    🪑 Kursi Ergonomis
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    ☀️ Natural Daylight
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Pricing & Action -->
+            <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Tarif Sewa</p>
+                <p class="text-lg font-bold text-slate-900 font-mono">
+                  Rp 25.000 <span class="text-xs font-normal text-slate-500 font-sans">/ jam</span>
+                </p>
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                <span>Lihat Detail</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 4: Private Studio Pod 04 (Private Office) -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition group flex flex-col justify-between">
+            <div>
+              <!-- Photo Container -->
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8DpJLFzhUTGx8Wm_6i9EhqOnIde-Br1Vdtvt1U1Q4OizLz0wrC5A4bEzKwcu5SmwUyPfOA7tcGU1zfp_xwarzQEF9LUOtsucFjhVo4L6LyHHFc83cVBYYPDfKAaBXvSN6eqfllLekWy6q23anxgEOBbet76PlU65d_1SaFBxrAi9WgiJ5EiaHbMIGdA0fGEHjuWerPgJJdLVVKfYq19Loqjvx4pgKEXB9HR36y40LwdusP-MoLrkqNw" 
+                  alt="Private Studio Pod 04" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                >
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600 text-white shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                    Tersedia
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-900/80 backdrop-blur-xs text-white">
+                    Private Office
+                  </span>
+                </div>
+                <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md text-[11px] font-medium text-slate-700 shadow-2xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span>4.9 (31 ulasan)</span>
+                </div>
+              </div>
+
+              <!-- Body Info -->
+              <div class="p-5">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-700 transition">
+                      Private Focus Suite — Quad Pod
+                    </h3>
+                    <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      Lantai 2, Private Corridor
+                    </p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+                  Ruang kerja tertutup privat berkapasitas 2-3 orang untuk tim kecil atau konsultan yang membutuhkan privasi total.
+                </p>
+
+                <!-- Spesifikasi Chips (Kapasitas & Fasilitas) -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-brand-800 border border-emerald-200">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                    </svg>
+                    2-3 Orang
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    🔒 Akses Smart Lock
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    ❄️ AC Independen
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Pricing & Action -->
+            <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Tarif Sewa</p>
+                <p class="text-lg font-bold text-slate-900 font-mono">
+                  Rp 95.000 <span class="text-xs font-normal text-slate-500 font-sans">/ jam</span>
+                </p>
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                <span>Lihat Detail</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 5: Creative Workshop Room (Meeting Room) -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition group flex flex-col justify-between">
+            <div>
+              <!-- Photo Container -->
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzNV0vbRGQt4XPsjDlS2oRvj51DpQzq8vuJN4WHA5Xcvgu4Eun9mR1GxCA9rQrgPdqsbCHemquFv5FpeJb72iukL5QLJ3SioRt0fsvdToKQgVnBzwUJjXxqG8slEGjPN4QQcjp_NZlGIFFGyPOR0ngVGUIhvaChiYK8Bq-8wrcOx_J98MnHQchpyloAUsiSbTkNmVLGO4iDJ1E3yNd5fjUuaAqVGCEq_AgHF3c1xw-7Aw0YNp-MebBxw" 
+                  alt="Creative Workshop Room" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                >
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-500 text-white shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                    Sisa 1 Slot Jam
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-900/80 backdrop-blur-xs text-white">
+                    Meeting Room
+                  </span>
+                </div>
+                <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md text-[11px] font-medium text-slate-700 shadow-2xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span>4.7 (54 ulasan)</span>
+                </div>
+              </div>
+
+              <!-- Body Info -->
+              <div class="p-5">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-700 transition">
+                      Studio Brainstorming & Sync Room
+                    </h3>
+                    <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      Lantai 3, Central Creative Wing
+                    </p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+                  Ruang kolaborasi aktif dengan sticky wall, wireless projector 120", sofa lounge, dan audio mic speakerphone kelas studio.
+                </p>
+
+                <!-- Spesifikasi Chips (Kapasitas & Fasilitas) -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-brand-800 border border-emerald-200">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                    </svg>
+                    6 Orang
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    📽️ Projector 120"
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    📝 Full Whiteboard
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Pricing & Action -->
+            <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Tarif Sewa</p>
+                <p class="text-lg font-bold text-slate-900 font-mono">
+                  Rp 135.000 <span class="text-xs font-normal text-slate-500 font-sans">/ jam</span>
+                </p>
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                <span>Lihat Detail</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 6: Quiet Library Desk (Personal Desk) -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition group flex flex-col justify-between">
+            <div>
+              <!-- Photo Container -->
+              <div class="relative h-48 w-full overflow-hidden bg-slate-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/aida/AEtjO1VEtup4i2YFNalLKN4roWpJhvhUvyC3oZdfsJo0LRLW-wSIooCcldCks9jydeJ9OfDlGQ_n9DiYZOWIsao6y9kXNqITLgzo2GU5qdxx5K59ZxujpQZA38lcW36wWPu6Fu82690VEkj06MRE43at8Ep71a6ohgJXUBPc5pr9lwhYD58wltk5I6htbnNh_hfR3OrspJ41vEoiqQGixNuIj7huGl2kCXol_j44OyX2TvryuSvfx_x_6l8cJDxj" 
+                  alt="Silent Library Desk Mezzanine" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                >
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-600 text-white shadow-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                    Tersedia
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-900/80 backdrop-blur-xs text-white">
+                    Personal Desk
+                  </span>
+                </div>
+                <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md text-[11px] font-medium text-slate-700 shadow-2xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span>4.9 (88 ulasan)</span>
+                </div>
+              </div>
+
+              <!-- Body Info -->
+              <div class="p-5">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base group-hover:text-brand-700 transition">
+                      Silent Reading & Deep Work Desk
+                    </h3>
+                    <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                      Lantai Mezzanine (Strict No Call Zone)
+                    </p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 line-clamp-2 mb-3.5 leading-relaxed">
+                  Zona super tenang bebas suara panggilan telepon, dilengkapi lampu meja warm baca adjustable dan sekat partisi kayu.
+                </p>
+
+                <!-- Spesifikasi Chips (Kapasitas & Fasilitas) -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-brand-800 border border-emerald-200">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                    </svg>
+                    1 Orang
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    🔇 Strict Silent Zone
+                  </span>
+                  <span class="px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    💡 Warm Reading Lamp
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer: Pricing & Action -->
+            <div class="p-5 pt-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Tarif Sewa</p>
+                <p class="text-lg font-bold text-slate-900 font-mono">
+                  Rp 30.000 <span class="text-xs font-normal text-slate-500 font-sans">/ jam</span>
+                </p>
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-2xs transition">
+                <span>Lihat Detail</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- PAGINATION / LOAD MORE SHADCN BAR -->
+      <div class="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-slate-500">
+          Menampilkan <span class="font-semibold text-slate-800 font-mono">1 - 6</span> dari <span class="font-semibold text-slate-800 font-mono">18</span> pilihan space di SmartSpace SCBD Hub
+        </p>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-400 bg-slate-50 cursor-not-allowed" disabled>
+            ← Sebelumnya
+          </button>
+          <div class="flex items-center gap-1">
+            <button class="w-8 h-8 rounded-lg bg-brand-700 text-white text-xs font-bold font-mono shadow-xs">1</button>
+            <button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium font-mono transition">2</button>
+            <button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-700 text-xs font-medium font-mono transition">3</button>
+          </div>
+          <button class="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+            Selanjutnya →
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Interactive Script for Dropdown Toggle -->
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdownMenu');
+      if (dropdown.classList.contains('hidden')) {
+        dropdown.classList.remove('hidden');
+      } else {
+        dropdown.classList.add('hidden');
+      }
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', function(event) {
+      const container = document.getElementById('profileDropdownContainer');
+      const dropdown = document.getElementById('dropdownMenu');
+      if (container && !container.contains(event.target) && dropdown) {
+        dropdown.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>

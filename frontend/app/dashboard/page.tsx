@@ -29,14 +29,12 @@ export default function DashboardRedirect() {
   }, [router]);
 
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center bg-[#faf6f0]">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50">
       <div className="relative w-16 h-16">
-        <div className="absolute inset-0 border-2 border-amber-600/20 rotate-45 rounded-lg animate-spin" style={{ animationDuration: '3s' }} />
-        <div className="absolute inset-2 border-2 border-amber-600/30 -rotate-6 rounded-lg animate-spin" style={{ animationDuration: '2.4s' }} />
-        <div className="absolute inset-4 border-2 border-amber-600/50 rotate-12 rounded-lg animate-spin" style={{ animationDuration: '1.8s' }} />
-        <div className="absolute inset-6 bg-gradient-to-br from-amber-600 to-amber-700 rotate-45 rounded-lg" />
+        <div className="absolute inset-0 border-4 border-emerald-700 border-t-transparent rounded-full animate-spin" />
+        <div className="absolute inset-2 border-4 border-emerald-700 border-t-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }} />
       </div>
-      <p className="mt-6 font-serif text-[#1a120b]">Mengalihkan ke dashboard...</p>
+      <p className="mt-6 text-sm text-slate-500">Mengalihkan ke dashboard...</p>
     </div>
   );
 }

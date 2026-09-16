@@ -14,22 +14,21 @@ import {
 import { useState, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-const BatikOrnament = () => (
+const NexusMark = () => (
   <svg
     width="24"
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    className="text-amber-500/70"
+    className="text-white"
   >
     <path
-      d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
       stroke="currentColor"
-      strokeWidth="1"
-      fill="currentColor"
-      fillOpacity="0.3"
+      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
     />
-    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1" />
   </svg>
 );
 
@@ -86,12 +85,12 @@ export default function Navbar() {
     { name: "Beranda", href: "/" },
     {
       name: "Space",
-      href: "/customer/spaces",
+      href: "/spaces",
       dropdown: [
-        { name: "Semua Space", href: "/customer/spaces" },
-        { name: "Personal Desk", href: "/customer/spaces?tipe=DESK" },
-        { name: "Meeting Room", href: "/customer/spaces?tipe=MEETING_ROOM" },
-        { name: "Private Office", href: "/customer/spaces?tipe=PRIVATE_OFFICE" },
+        { name: "Semua Space", href: "/spaces" },
+        { name: "Personal Desk", href: "/spaces?tipe=DESK" },
+        { name: "Meeting Room", href: "/spaces?tipe=MEETING_ROOM" },
+        { name: "Private Office", href: "/spaces?tipe=PRIVATE_OFFICE" },
       ],
     },
     { name: "Cara Booking", href: "/#cara-booking" },
@@ -100,7 +99,7 @@ export default function Navbar() {
   ], []);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : (href.includes('/customer/spaces') ? pathname?.startsWith('/customer/spaces') : pathname === href.split('#')[0]);
+    href === "/" ? pathname === "/" : (href.includes('/spaces') ? pathname?.startsWith('/spaces') : pathname === href.split('#')[0]);
 
   const profileHref = isAuthenticated
     ? userRole === 'ADMIN_SPACE' ? '/admin/profile' : '/customer/profile'
@@ -109,55 +108,12 @@ export default function Navbar() {
   return (
     <>
       <div className="fixed top-0 w-full z-50">
-        <div
-          className={`transition-all duration-500 ${isScrolled ? "h-0 overflow-hidden" : "h-7 bg-[#1a0f08]"}`}
-        >
-          <div className="container mx-auto px-6 h-full flex items-center justify-between">
-            <p className="text-[10px] text-amber-400/70 tracking-[0.2em] uppercase font-medium">
-              ✦ Reservasi Coworking Space Mudah & Cepat ✦
-            </p>
-            <div className="flex items-center gap-4 text-[10px] text-amber-400/60 tracking-wider">
-              {isAuthenticated ? (
-                <>
-                  <Link href={profileHref} className="text-amber-300/80 hover:text-amber-300 transition">
-                    {userName}
-                  </Link>
-                  <span className="text-amber-700">|</span>
-                  <button
-                    onClick={handleLogout}
-                    className="hover:text-amber-300 transition"
-                  >
-                    Keluar
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/sign-in"
-                    className="hover:text-amber-300 transition"
-                  >
-                    Masuk
-                  </Link>
-                  <span className="text-amber-700">|</span>
-                  <Link
-                    href="/sign-up"
-                    className="hover:text-amber-300 transition"
-                  >
-                    Daftar
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-
         <nav
           className={`transition-all duration-500 ${isScrolled
-              ? "bg-[#1c1008]/97 backdrop-blur-xl shadow-2xl shadow-black/30 border-b border-amber-800/20"
-              : "bg-gradient-to-b from-[#1a0f08]/95 to-[#1a0f08]/80 backdrop-blur-sm"
+              ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-slate-200"
+              : "bg-white/90 backdrop-blur-sm"
             }`}
         >
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-600/60 to-transparent" />
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-10">
             <div className="flex justify-between items-center h-[68px]">
@@ -166,15 +122,18 @@ export default function Navbar() {
                 className="group flex items-center gap-2.5 shrink-0"
               >
                 <div className="relative">
-                  <div className="w-9 h-9 rounded-full bg-amber-600/20 border border-amber-500/30 flex items-center justify-center group-hover:bg-amber-600/30 transition-all duration-300">
-                    <BatikOrnament />
+                  <div className="w-9 h-9 rounded-xl bg-emerald-700 shadow-sm flex items-center justify-center group-hover:bg-emerald-600 transition-all duration-300">
+                    <NexusMark />
                   </div>
+                  <span className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-white" />
                 </div>
                 <div>
-                  <div className="font-serif text-xl text-white tracking-wide leading-none group-hover:text-amber-200 transition-colors duration-300">
-                    Smart Space
+                  <div className="flex items-center gap-1.5">
+                    <div className="font-bold text-xl text-slate-900 tracking-tight leading-none group-hover:text-emerald-700 transition-colors duration-300">
+                      Nexus
+                    </div>
                   </div>
-                  <div className="text-[8px] text-amber-500/70 tracking-[0.25em] uppercase mt-0.5">
+                  <div className="text-[9px] text-slate-400 tracking-[0.2em] uppercase font-semibold mt-0.5">
                     Coworking Space
                   </div>
                 </div>
@@ -194,14 +153,14 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${isActive(link.href)
-                          ? "text-amber-400"
-                          : "text-amber-100/80 hover:text-amber-300"
+                          ? "text-emerald-700"
+                          : "text-slate-600 hover:text-emerald-700"
                         }`}
                     >
                       <span className="relative">
                         {link.name}
                         {isActive(link.href) && (
-                          <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-amber-500 rounded-full" />
+                          <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-emerald-600 rounded-full" />
                         )}
                       </span>
                       {link.dropdown && (
@@ -212,23 +171,21 @@ export default function Navbar() {
                     </Link>
 
                     {link.dropdown && activeDropdown === link.name && (
-                      <div className="absolute top-full left-0 mt-1 w-56 bg-[#1c1008] border border-amber-800/30 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
-                        <div className="h-px bg-gradient-to-r from-transparent via-amber-600/40 to-transparent" />
+                      <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-slate-200 rounded-xl shadow-lg shadow-slate-900/5 overflow-hidden z-50">
                         <div className="py-2">
                           {link.dropdown.map((item: any) => (
                             <Link
                               key={item.name}
                               href={item.href}
-                              className="flex items-center justify-between gap-2.5 px-4 py-2.5 text-sm text-amber-100/70 hover:text-amber-300 hover:bg-amber-900/30 transition-all duration-150"
+                              className="flex items-center justify-between gap-2.5 px-4 py-2.5 text-sm text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-150"
                             >
                               <span className="flex items-center gap-2.5 min-w-0">
-                                <span className="w-1 h-1 rounded-full bg-amber-600/50 shrink-0" />
+                                <span className="w-1 h-1 rounded-full bg-emerald-300 shrink-0" />
                                 <span className="truncate">{item.name}</span>
                               </span>
                             </Link>
                           ))}
                         </div>
-                        <div className="h-px bg-gradient-to-r from-transparent via-amber-600/40 to-transparent" />
                       </div>
                     )}
                   </div>
@@ -239,7 +196,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <Link
                   href={profileHref}
-                  className="hidden md:flex p-2.5 text-amber-100/70 hover:text-amber-300 hover:bg-amber-900/30 rounded-lg transition-all duration-200"
+                  className="hidden md:flex p-2.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200"
                   aria-label="Akun saya"
                 >
                   <User className="w-4.5 h-4.5" />
@@ -248,7 +205,7 @@ export default function Navbar() {
                 {isAuthenticated && (
                   <Link
                     href={userRole === 'ADMIN_SPACE' ? '/admin/spaces' : '/customer/reservasi'}
-                    className="hidden md:flex p-2.5 text-amber-100/70 hover:text-amber-300 hover:bg-amber-900/30 rounded-lg transition-all duration-200"
+                    className="hidden md:flex p-2.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200"
                     aria-label="Dashboard"
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -256,8 +213,8 @@ export default function Navbar() {
                 )}
 
                 <Link
-                  href={isAuthenticated ? "/customer/spaces" : "/sign-in"}
-                  className="relative flex items-center gap-2 bg-amber-700 hover:bg-amber-600 text-white px-4 py-2.5 rounded-lg transition-all duration-200 shadow-lg shadow-amber-900/30"
+                  href={isAuthenticated ? "/customer/spaces" : "/spaces"}
+                  className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-lg transition-all duration-200 shadow-sm"
                   aria-label="Reservasi space"
                 >
                   <CalendarClock className="w-4 h-4" />
@@ -269,7 +226,7 @@ export default function Navbar() {
                 {isAuthenticated && (
                   <button
                     onClick={handleLogout}
-                    className="hidden md:flex p-2.5 text-amber-100/70 hover:text-red-400 hover:bg-red-900/20 rounded-lg transition-all duration-200"
+                    className="hidden md:flex p-2.5 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
                     aria-label="Keluar"
                   >
                     <LogOut className="w-4 h-4" />
@@ -277,7 +234,7 @@ export default function Navbar() {
                 )}
 
                 <button
-                  className="lg:hidden p-2.5 text-amber-100/80 hover:text-amber-300 hover:bg-amber-900/30 rounded-lg transition ml-1"
+                  className="lg:hidden p-2.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition ml-1"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   aria-label="Toggle menu"
                 >
@@ -291,7 +248,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-amber-700/30 to-transparent" />
+          <div className="h-px w-full bg-slate-100" />
         </nav>
       </div>
 
@@ -300,17 +257,22 @@ export default function Navbar() {
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-400 ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}`}
       >
         <div
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
           onClick={() => setIsMenuOpen(false)}
         />
         <div
-          className={`absolute top-0 right-0 h-full w-80 max-w-full bg-[#140d06] border-l border-amber-800/20 shadow-2xl transition-transform duration-400 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute top-0 right-0 h-full w-80 max-w-full bg-white border-l border-slate-200 shadow-2xl transition-transform duration-400 ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          <div className="flex items-center justify-between p-5 border-b border-amber-800/20">
-            <div className="font-serif text-lg text-white">Smart Space Booking</div>
+          <div className="flex items-center justify-between p-5 border-b border-slate-200">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center">
+                <NexusMark />
+              </div>
+              <div className="font-bold text-lg text-slate-900 tracking-tight">Nexus Booking</div>
+            </div>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 text-amber-400 hover:bg-amber-900/30 rounded-lg transition"
+              className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
             >
               <X className="w-5 h-5" />
             </button>
@@ -322,8 +284,8 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   className={`flex items-center justify-between px-5 py-3.5 text-sm font-medium transition-all ${isActive(link.href)
-                      ? "text-amber-400 bg-amber-900/20 border-r-2 border-amber-500"
-                      : "text-amber-100/80 hover:text-amber-300 hover:bg-amber-900/20"
+                      ? "text-emerald-700 bg-emerald-50 border-r-2 border-emerald-600"
+                      : "text-slate-600 hover:text-emerald-700 hover:bg-slate-50"
                     }`}
                 >
                   {link.name}
@@ -331,21 +293,21 @@ export default function Navbar() {
               </div>
             ))}
 
-            <div className="mx-5 mt-6 pt-6 border-t border-amber-800/20 space-y-3">
+            <div className="mx-5 mt-6 pt-6 border-t border-slate-200 space-y-3">
               {isAuthenticated ? (
                 <>
-                  <div className="text-center text-amber-300/80 text-sm font-medium py-2">
+                  <div className="text-center text-slate-800 text-sm font-medium py-2">
                     {userName}
                   </div>
                   <Link
                     href={userRole === 'ADMIN_SPACE' ? '/admin/profile' : '/customer/profile'}
-                    className="flex items-center justify-center gap-2 w-full border border-amber-700/40 text-amber-300 py-3 rounded-xl text-sm font-medium hover:bg-amber-900/20 transition"
+                    className="flex items-center justify-center gap-2 w-full border border-slate-200 text-slate-700 py-3 rounded-xl text-sm font-medium hover:bg-slate-50 transition"
                   >
                     <User className="w-4 h-4" /> Profil Saya
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center justify-center gap-2 w-full border border-red-700/40 text-red-400 py-3 rounded-xl text-sm font-medium hover:bg-red-900/20 transition"
+                    className="flex items-center justify-center gap-2 w-full border border-red-200 text-red-600 py-3 rounded-xl text-sm font-medium hover:bg-red-50 transition"
                   >
                     <LogOut className="w-4 h-4" /> Keluar
                   </button>
@@ -354,13 +316,13 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/sign-in"
-                    className="flex items-center justify-center gap-2 w-full border border-amber-700/40 text-amber-300 py-3 rounded-xl text-sm font-medium hover:bg-amber-900/20 transition"
+                    className="flex items-center justify-center gap-2 w-full border border-slate-200 text-slate-700 py-3 rounded-xl text-sm font-medium hover:bg-slate-50 transition"
                   >
                     <User className="w-4 h-4" /> Masuk
                   </Link>
                   <Link
                     href="/sign-up"
-                    className="flex items-center justify-center gap-2 w-full bg-amber-700 text-white py-3 rounded-xl text-sm font-medium hover:bg-amber-600 transition"
+                    className="flex items-center justify-center gap-2 w-full bg-emerald-700 text-white py-3 rounded-xl text-sm font-medium hover:bg-emerald-600 transition"
                   >
                     Daftar Sekarang
                   </Link>
@@ -368,7 +330,7 @@ export default function Navbar() {
               )}
             </div>
 
-            <p className="text-center text-[10px] text-amber-700/50 italic font-serif mt-8 px-5">
+            <p className="text-center text-[11px] text-slate-400 font-medium mt-8 px-5">
               "Reservasi Space, Tinggal Klik!"
             </p>
           </div>
@@ -376,9 +338,7 @@ export default function Navbar() {
       </div>
 
       {/* Spacer */}
-      <div
-        className={`transition-all duration-500 ${isScrolled ? "h-[68px]" : "h-[95px]"}`}
-      />
+      <div className="h-[68px]" />
     </>
   );
 }

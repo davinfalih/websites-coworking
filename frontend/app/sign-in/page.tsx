@@ -1,17 +1,10 @@
-// app/sign-in/page.tsx
 'use client';
 
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogIn, Eye, EyeOff, User as UserIcon, MapPin, Clock, Wallet, Star } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { api } from "@/lib/api";
-
-const perks = [
-  { icon: Star, text: "Booking space favorit dalam hitungan menit" },
-  { icon: Wallet, text: "Harga transparan + diskon promo menarik" },
-  { icon: Clock, text: "Status reservasi terpantau real-time" },
-];
 
 export default function SignIn() {
   const router = useRouter();
@@ -36,7 +29,12 @@ export default function SignIn() {
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      window.location.href = user.role === "ADMIN_SPACE" ? "/admin/profile" : "/customer/spaces";
+      const redirect = new URLSearchParams(window.location.search).get("redirect");
+      if (redirect && redirect.startsWith("/") && user.role === "MEMBER") {
+        window.location.href = redirect;
+      } else {
+        window.location.href = user.role === "ADMIN_SPACE" ? "/admin/profile" : "/customer/spaces";
+      }
     } catch (err: any) {
       setError(err?.message || "Terjadi kesalahan. Pastikan server berjalan.");
     } finally {
@@ -45,159 +43,211 @@ export default function SignIn() {
   };
 
   return (
-    <main className="min-h-screen bg-[#faf6f0] flex items-center justify-center relative overflow-hidden py-14">
-      <div className="absolute inset-0">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-white text-slate-800 antialiased">
+      {/* LeftBrandSidebar */}
+      <section className="relative w-full lg:w-[46%] min-h-[500px] lg:min-h-screen flex flex-col justify-between p-8 lg:p-14 overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800">
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(196,148,74,0.08) 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='1' fill='none' d='M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4'/%3E%3C/svg%3E")`,
+            backgroundSize: "30px 30px",
           }}
         />
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-amber-600/10 blur-[100px]" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-amber-500/10 blur-[100px]" />
-      </div>
-
-      <div className="relative z-10 w-full max-w-4xl mx-4 md:mx-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] bg-white rounded-3xl shadow-2xl shadow-amber-900/10 border border-amber-100 overflow-hidden">
-          {/* Panel brand */}
-          <div className="hidden lg:flex flex-col justify-between p-10 bg-gradient-to-br from-[#1a0f08] via-[#20130a] to-[#1a0f08] relative">
-            <div
-              className="absolute inset-0 opacity-[0.04]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0L10 6L16 8L10 10L8 16L6 10L0 8L6 6L8 0Z' fill='%23c4944a'/%3E%3C/svg%3E")`,
-                backgroundSize: "40px 40px",
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full bg-amber-600/20 border border-amber-500/40 flex items-center justify-center">
-                  <Star className="w-4 h-4 text-amber-400" />
-                </div>
-                <div>
-                  <p className="font-serif text-white text-lg leading-none">Smart Space</p>
-                  <p className="text-[8px] text-amber-500/70 tracking-[0.25em] uppercase mt-0.5">Coworking Space</p>
-                </div>
-              </div>
-              <h2 className="font-serif text-3xl text-white leading-snug mb-4">
-                Selamat Datang<br />Kembali!
-              </h2>
-              <p className="text-amber-100/50 text-sm mb-8 leading-relaxed">
-                Masuk untuk melanjutkan reservasi dan kelola aktivitas coworking-mu.
-              </p>
-              <div className="space-y-4 mb-8">
-                {perks.map((p) => (
-                  <div key={p.text} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-amber-600/15 flex items-center justify-center text-amber-400">
-                      <p.icon className="w-4 h-4" />
-                    </div>
-                    <p className="text-amber-100/60 text-sm">{p.text}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="text-amber-100/40 text-xs font-serif italic">
-                “Tempatnya fokus, ruangnya inspirasi.”
-              </div>
-            </div>
-            <div className="relative flex items-center gap-2 opacity-40">
-              <div className="w-16 h-px bg-amber-600/50" />
-              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" className="text-amber-600">
-                <path d="M8 0L10 6L16 8L10 10L8 16L6 10L0 8L6 6L8 0Z" fill="currentColor" />
-              </svg>
-              <div className="w-16 h-px bg-amber-600/50" />
-            </div>
+        
+        <div className="flex items-center gap-3 relative z-10">
+          <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-emerald-300 shadow-inner">
+            <svg className="h-6 w-6 text-emerald-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
           </div>
-
-          {/* Form */}
-          <div className="p-8 md:p-12">
-            <div className="lg:hidden flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-full bg-amber-600/20 border border-amber-500/40 flex items-center justify-center">
-                <Star className="w-3.5 h-3.5 text-amber-600" />
-              </div>
-              <p className="font-serif text-[#1a120b] font-semibold">Smart Space Booking</p>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-white font-bold text-xl tracking-tight">Nexus</span>
+              <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
             </div>
-
-            <h1 className="font-serif text-2xl font-bold text-[#1a120b] mb-1">Masuk</h1>
-            <p className="text-sm text-gray-500 mb-8">Silakan masuk menggunakan akunmu.</p>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-600 mb-1.5">
-                  Username
-                </label>
-                <div className="relative">
-                  <UserIcon className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    id="username"
-                    type="text"
-                    value={form.username}
-                    onChange={(e) => setForm({ ...form, username: e.target.value })}
-                    placeholder="Masukkan username"
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-1.5">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    placeholder="Masukkan password"
-                    className="w-full pl-4 pr-11 py-3 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-amber-600/50 hover:text-amber-600 transition"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              {error && (
-                <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
-                  {error}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white font-semibold py-3.5 rounded-xl transition-all duration-300 shadow-lg shadow-amber-900/20 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {loading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                    Masuk...
-                  </>
-                ) : (
-                  <>
-                    <LogIn className="w-4 h-4" /> Masuk
-                  </>
-                )}
-              </button>
-            </form>
-
-            <p className="text-center text-sm text-gray-500 mt-6">
-              Belum punya akun?{" "}
-              <Link href="/sign-up" className="text-amber-700 font-semibold hover:text-amber-800">
-                Daftar Sekarang
-              </Link>
-            </p>
-
-            <div className="mt-6 border-t border-amber-100 pt-4 flex items-center justify-center gap-2 text-[10px] text-gray-400">
-              <MapPin className="w-3 h-3 text-amber-600/60" /> Jl. Nusantara No. 1, Jakarta
-            </div>
+            <p className="text-[10px] font-semibold text-emerald-200/80 tracking-widest uppercase">Workstation &amp; Booking</p>
           </div>
         </div>
-      </div>
-    </main>
+
+        <div className="my-10 lg:my-auto max-w-lg space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-emerald-400/30 text-emerald-200 text-xs font-medium backdrop-blur-sm">
+            <span>🌿</span>
+            <span>Ruang Kerja Ergonomis &amp; Tenang</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white leading-tight tracking-tight">
+            Ruang Kerja Tenang untuk Produktivitas Maksimal.
+          </h1>
+          <p className="text-emerald-100/80 text-sm sm:text-base leading-relaxed">
+            Temukan suasana bekerja yang kondusif dengan fasilitas pintar terintegrasi, fleksibilitas reservasi instan, dan ekosistem profesional dinamis.
+          </p>
+          <div className="space-y-3.5 pt-2">
+            {[
+              "Akses 24/7 High-speed Internet & Private Power-outlets",
+              "Ergonomic Pods & Private Meeting Rooms",
+              "Komunitas Profesional & Kreatif Terkurasi"
+            ].map(item => (
+              <div key={item} className="flex items-start gap-3 text-emerald-100/90">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 mt-0.5">
+                  <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
+                  </svg>
+                </div>
+                <p className="text-white text-sm font-medium">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RightLoginFormArea */}
+      <main className="w-full lg:w-[54%] bg-slate-50/50 flex flex-col justify-between p-6 sm:p-10 lg:p-16 overflow-y-auto">
+        <div className="flex items-center justify-between w-full max-w-md mx-auto mb-8">
+          <Link href="/" className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors group">
+            <svg className="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Kembali ke Beranda
+          </Link>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-brand border border-emerald-100">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            Sistem Online
+          </span>
+        </div>
+
+        <div className="w-full max-w-md mx-auto my-auto py-2">
+          <header className="mb-7 text-left">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Masuk ke Akun</h2>
+            <p className="text-sm text-slate-500 mt-2 leading-relaxed">
+              Akses reservasi ruang kerja, check-in QR, atau kelola coworking space Anda.
+            </p>
+          </header>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="identifier" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                Username atau Email <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                  </svg>
+                </div>
+                <input
+                  id="identifier"
+                  type="text"
+                  value={form.username}
+                  onChange={(e) => setForm({ ...form, username: e.target.value })}
+                  placeholder="nama@perusahaan.com atau username"
+                  required
+                  className="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-brand transition"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="password" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                  Kata Sandi <span className="text-rose-500">*</span>
+                </label>
+              </div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                </div>
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  placeholder="Masukkan kata sandi"
+                  required
+                  className="w-full pl-11 pr-11 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-brand transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none"
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" strokeWidth="1.8" /> : <Eye className="h-5 w-5" strokeWidth="1.8" />}
+                </button>
+              </div>
+            </div>
+
+            {error && (
+              <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                {error}
+              </div>
+            )}
+
+            <div className="flex items-center justify-between pt-1 pb-1">
+              <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" className="w-4 h-4 rounded text-brand border-slate-300 focus:ring-emerald-500/30 focus:ring-offset-0 transition" />
+                <span className="text-xs sm:text-sm text-slate-600">Ingat saya selama 30 hari</span>
+              </label>
+              <Link href="#" className="text-xs sm:text-sm font-medium text-brand hover:text-brand-hover hover:underline">
+                Lupa Password?
+              </Link>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 px-4 bg-brand hover:bg-brand-hover text-white rounded-lg font-semibold text-sm shadow-sm transition-all duration-200 flex items-center justify-center gap-2 focus:ring-4 focus:ring-emerald-500/20 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                  Masuk...
+                </>
+              ) : (
+                <>
+                  <span>Masuk Sekarang</span>
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                  </svg>
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase tracking-wider">
+              <span className="bg-slate-50/50 px-3 text-slate-400 font-medium">Atau masuk dengan</span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <button type="button" className="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 shadow-sm transition active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-slate-200">
+              <svg className="h-4 w-4" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+              </svg>
+              <span>Lanjutkan dengan Google</span>
+            </button>
+          </div>
+
+          <div className="mt-8 text-center pt-2">
+            <p className="text-xs sm:text-sm text-slate-600">
+              Belum punya akun Member?{" "}
+              <Link href="/sign-up" className="font-semibold text-brand hover:text-brand-hover hover:underline transition">
+                Daftar Akun Member
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        <footer className="w-full max-w-md mx-auto text-center pt-6 text-xs text-slate-400">
+          <p>© 2025 Nexus Workstation &amp; Booking. Seluruh hak cipta dilindungi.</p>
+        </footer>
+      </main>
+    </div>
   );
 }

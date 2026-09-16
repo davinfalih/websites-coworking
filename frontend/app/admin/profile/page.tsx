@@ -49,64 +49,58 @@ export default function AdminProfilePage() {
   };
 
   const inputClass =
-    'w-full pl-10 pr-4 py-2.5 rounded-xl border border-amber-200 bg-[#faf6f0] focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition text-[#1a120b] text-sm';
+    'w-full h-10 pl-10 pr-3 rounded-lg border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition';
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[#1a120b]">Profil Pengelola</h1>
-          <p className="text-sm text-gray-500 mt-1">Kelola identitas coworking space-mu.</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">Identitas</p>
+          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">Profil Pengelola</h1>
+          <p className="mt-1 text-sm text-slate-500">Kelola identitas coworking space-mu.</p>
         </div>
       </div>
 
       {message && (
-        <div className={`text-sm px-4 py-3 rounded-xl border ${message.type === 'success' ? 'text-green-700 bg-green-50 border-green-100' : 'text-red-600 bg-red-50 border-red-100'}`}>
+        <div className={`rounded-xl border px-4 py-3 text-sm ${message.type === 'success' ? 'border-emerald-100 bg-emerald-50 text-emerald-700' : 'border-red-100 bg-red-50 text-red-600'}`}>
           {message.text}
         </div>
       )}
 
       {profile && !editing && (
-        <div className="bg-white rounded-2xl border border-amber-100 overflow-hidden">
-          <div className="relative h-32 bg-gradient-to-br from-[#1a0f08] via-amber-900 to-amber-800">
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0L10 6L16 8L10 10L8 16L6 10L0 8L6 6L8 0Z' fill='%23fff'/%3E%3C/svg%3E")`,
-                backgroundSize: '30px 30px',
-              }}
-            />
-            <div className="absolute -bottom-10 left-8 w-20 h-20 rounded-2xl bg-white border border-amber-100 shadow-lg flex items-center justify-center">
-              <Building2 className="w-9 h-9 text-amber-700" />
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_0_rgba(15,23,42,0.04)]">
+          <div className="relative h-32 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-700">
+            <div className="absolute -bottom-10 left-8 flex h-20 w-20 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-lg">
+              <Building2 className="h-9 w-9 text-emerald-700" />
             </div>
           </div>
-          <div className="pt-14 px-8 pb-8">
+          <div className="px-8 pb-8 pt-14">
             <div className="flex justify-end">
               <button
                 onClick={() => setEditing(true)}
-                className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 text-white text-sm font-medium px-4 py-2 rounded-xl transition"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-600"
               >
-                <Pencil className="w-4 h-4" /> Ubah Profil
+                <Pencil className="h-4 w-4" /> Ubah Profil
               </button>
             </div>
-            <h2 className="text-2xl font-serif font-bold text-[#1a120b] mb-1">{profile.nama_coworking}</h2>
-            <p className="text-sm text-amber-700 mb-6">Coworking Space • Jakarta</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="p-4 rounded-xl border border-amber-100 bg-[#faf6f0]">
-                <p className="text-xs text-gray-400 flex items-center gap-1 mb-1"><Building2 className="w-3.5 h-3.5 text-amber-600/60" /> Nama Coworking</p>
-                <p className="text-sm font-medium text-[#1a120b]">{profile.nama_coworking}</p>
+            <h2 className="mb-1 mt-6 text-2xl font-semibold tracking-tight text-slate-900">{profile.nama_coworking}</h2>
+            <p className="mb-6 text-sm text-emerald-700">Coworking Space • Jakarta</p>
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="mb-1 flex items-center gap-1 text-xs text-slate-400"><Building2 className="h-3.5 w-3.5 text-emerald-600/70" /> Nama Coworking</p>
+                <p className="text-sm font-medium text-slate-900">{profile.nama_coworking}</p>
               </div>
-              <div className="p-4 rounded-xl border border-amber-100 bg-[#faf6f0]">
-                <p className="text-xs text-gray-400 flex items-center gap-1 mb-1"><UserIcon className="w-3.5 h-3.5 text-amber-600/60" /> Nama Pemilik</p>
-                <p className="text-sm font-medium text-[#1a120b]">{profile.nama_pemilik}</p>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="mb-1 flex items-center gap-1 text-xs text-slate-400"><UserIcon className="h-3.5 w-3.5 text-emerald-600/70" /> Nama Pemilik</p>
+                <p className="text-sm font-medium text-slate-900">{profile.nama_pemilik}</p>
               </div>
-              <div className="p-4 rounded-xl border border-amber-100 bg-[#faf6f0]">
-                <p className="text-xs text-gray-400 flex items-center gap-1 mb-1"><Phone className="w-3.5 h-3.5 text-amber-600/60" /> No. Telepon</p>
-                <p className="text-sm font-medium text-[#1a120b]">{profile.telp || '-'}</p>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="mb-1 flex items-center gap-1 text-xs text-slate-400"><Phone className="h-3.5 w-3.5 text-emerald-600/70" /> No. Telepon</p>
+                <p className="text-sm font-medium text-slate-900">{profile.telp || '-'}</p>
               </div>
-              <div className="p-4 rounded-xl border border-amber-100 bg-[#faf6f0]">
-                <p className="text-xs text-gray-400 flex items-center gap-1 mb-1"><UserIcon className="w-3.5 h-3.5 text-amber-600/60" /> Username</p>
-                <p className="text-sm font-medium text-[#1a120b]">@{profile.user?.username || '-'}</p>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="mb-1 flex items-center gap-1 text-xs text-slate-400"><UserIcon className="h-3.5 w-3.5 text-emerald-600/70" /> Username</p>
+                <p className="text-sm font-medium text-slate-900">@{profile.user?.username || '-'}</p>
               </div>
             </div>
           </div>
@@ -114,41 +108,41 @@ export default function AdminProfilePage() {
       )}
 
       {editing && (
-        <div className="bg-white rounded-2xl border border-amber-100 p-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-serif font-bold text-[#1a120b]">Ubah Profil</h2>
-            <button onClick={() => setEditing(false)} className="text-gray-400 hover:text-gray-600 flex items-center gap-1 text-sm">
-              <X className="w-4 h-4" /> Batal
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_1px_2px_0_rgba(15,23,42,0.04)]">
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-lg font-semibold tracking-tight text-slate-900">Ubah Profil</h2>
+            <button onClick={() => setEditing(false)} className="flex items-center gap-1 text-sm text-slate-400 hover:text-slate-600">
+              <X className="h-4 w-4" /> Batal
             </button>
           </div>
-          <form onSubmit={handleSave} className="space-y-5 max-w-xl">
+          <form onSubmit={handleSave} className="max-w-xl space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Nama Coworking Space</label>
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700">Nama Coworking Space</label>
               <div className="relative">
-                <Building2 className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Building2 className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <input type="text" value={form.nama_coworking} onChange={(e) => setForm({ ...form, nama_coworking: e.target.value })} className={inputClass} />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">Nama Pemilik</label>
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700">Nama Pemilik</label>
               <div className="relative">
-                <UserIcon className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <UserIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <input type="text" value={form.nama_pemilik} onChange={(e) => setForm({ ...form, nama_pemilik: e.target.value })} className={inputClass} />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1.5">No. Telepon</label>
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700">No. Telepon</label>
               <div className="relative">
-                <Phone className="w-4 h-4 text-amber-600/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <input type="tel" value={form.telp} onChange={(e) => setForm({ ...form, telp: e.target.value })} className={inputClass} />
               </div>
             </div>
             <div className="flex gap-3 pt-2">
-              <button type="submit" disabled={saving} className="flex items-center gap-2 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white text-sm font-semibold px-6 py-3 rounded-xl transition disabled:opacity-60">
-                {saving ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Menyimpan...</> : <><Save className="w-4 h-4" /> Simpan</>}
+              <button type="submit" disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-600 disabled:opacity-60">
+                {saving ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> Menyimpan...</> : <><Save className="h-4 w-4" /> Simpan</>}
               </button>
-              <button type="button" onClick={() => setEditing(false)} className="flex items-center gap-2 border border-amber-200 text-gray-600 hover:bg-[#faf6f0] text-sm font-medium px-6 py-3 rounded-xl transition">
-                <ArrowLeft className="w-4 h-4" /> Kembali
+              <button type="button" onClick={() => setEditing(false)} className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-900 shadow-sm transition hover:bg-slate-50">
+                <ArrowLeft className="h-4 w-4" /> Kembali
               </button>
             </div>
           </form>
@@ -156,7 +150,7 @@ export default function AdminProfilePage() {
       )}
 
       {!profile && !editing && (
-        <div className="bg-white rounded-2xl border border-amber-100 p-10 text-center text-gray-400 text-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center text-sm text-slate-400">
           Memuat profil...
         </div>
       )}
