@@ -38,6 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const [user, setUser] = useState<{ username?: string; role?: string } | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(() => {
@@ -184,17 +185,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             );
           })}
         </nav>
-
-        {/* Bottom */}
-        <div className="border-t border-slate-800 p-4">
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-400 transition hover:bg-red-950/50 hover:text-red-300"
-          >
-            <LogOut className="h-4.5 w-4.5" />
-            <span>Keluar (Logout)</span>
-          </button>
-        </div>
       </aside>
 
       <main className={cn('min-h-screen transition-all duration-300', sidebarCollapsed ? 'lg:ml-0' : 'lg:ml-64')}>
@@ -214,20 +204,56 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span className="font-medium text-slate-900">{currentTitle}</span>
           </div>
 
-          <button className="relative ml-auto rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 md:ml-0">
-            <Bell className="h-5 w-5" />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-emerald-600 ring-2 ring-white" />
-          </button>
+          <div className="ml-auto flex items-center gap-2">
+            <button className="relative rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800">
+              <Bell className="h-5 w-5" />
+              <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-emerald-600 ring-2 ring-white" />
+            </button>
 
-          <div className="flex items-center gap-2.5 rounded-lg border border-slate-200 py-1 pl-1 pr-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-700 text-sm font-semibold text-white">
-              {user?.username?.charAt(0)?.toUpperCase() || 'A'}
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen((v) => !v)}
+                className="flex items-center gap-2.5 rounded-lg border border-slate-200 py-1 pl-1 pr-2.5 text-left transition hover:bg-slate-50"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-700 text-sm font-semibold text-white">
+                  {user?.username?.charAt(0)?.toUpperCase() || 'A'}
+                </div>
+                <div className="hidden leading-tight sm:block">
+                  <p className="text-xs font-semibold text-slate-800">@{user?.username || 'Admin'}</p>
+                  <p className="text-[11px] text-slate-500">Super Admin</p>
+                </div>
+                <ChevronsUpDown className="h-3.5 w-3.5 text-slate-400" />
+              </button>
+
+              {profileOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)} />
+                  <div className="absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl border border-slate-200 bg-white py-1.5 shadow-lg">
+                    <div className="border-b border-slate-100 px-3.5 py-2">
+                      <p className="text-xs font-semibold text-slate-900">@{user?.username || 'Admin'}</p>
+                      <p className="text-[11px] text-slate-500">Super Admin</p>
+                    </div>
+                    <Link
+                      href="/admin/profile"
+                      onClick={() => setProfileOpen(false)}
+                      className="mt-1 flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-50 hover:text-emerald-700"
+                    >
+                      <Store className="h-3.5 w-3.5" />
+                      Profil Coworking
+                    </Link>
+                    <div className="mt-1 border-t border-slate-100 pt-1">
+                      <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 transition hover:bg-red-50"
+                      >
+                        <LogOut className="h-3.5 w-3.5" />
+                        Keluar (Logout)
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            <div className="hidden sm:block leading-tight">
-              <p className="text-xs font-semibold text-slate-800">@{user?.username || 'Admin'}</p>
-              <p className="text-[11px] text-slate-500">Super Admin</p>
-            </div>
-            <ChevronsUpDown className="h-3.5 w-3.5 text-slate-400" />
           </div>
         </header>
 
