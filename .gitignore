@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Database data (lokal, tidak untuk direpo)
+.mariadb-data/
+
+# Dependencies & build
+node_modules/
+dist/
+.next/
+uploads/
+
+# Env
+.env
+.env*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Referensi desain (lokal)
+design-reference/

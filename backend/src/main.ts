@@ -5,9 +5,15 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
+import { PrismaService } from './prisma/prisma.service';
+import { seedDatabase } from './db/seed';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Seed database otomatis pada saat server pertama kali berjalan
+  const prisma = app.get(PrismaService);
+  await seedDatabase(prisma);
 
   // Swagger Configuration
   const config = new DocumentBuilder()

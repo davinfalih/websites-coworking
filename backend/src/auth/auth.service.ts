@@ -7,7 +7,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { RegisterMemberDto } from './dto/register-member.dto';
-import { RegisterOwnerDto } from './dto/register-owner.dto';
 import { LoginDto } from './dto/login.dto';
 import { Role } from '@prisma/client';
 
@@ -60,52 +59,6 @@ export class AuthService {
           id: member.id,
           nama_member: member.nama_member,
           instansi: member.instansi,
-        },
-      },
-    };
-  }
-
-  async registerOwner(dto: RegisterOwnerDto) {
-    const existing = await this.prisma.user.findUnique({
-      where: { username: dto.username },
-    });
-    if (existing) {
-      throw new BadRequestException('Username sudah digunakan');
-    }
-
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
-
-    const user = await this.prisma.user.create({
-      data: {
-        username: dto.username,
-        password: hashedPassword,
-        role: Role.ADMIN_SPACE,
-      },
-    });
-
-    const owner = await this.prisma.spaceOwner.create({
-      data: {
-        id_user: user.id,
-        nama_coworking: dto.nama_coworking,
-        nama_pemilik: dto.nama_pemilik,
-        telp: dto.telp ?? null,
-      },
-    });
-
-    return {
-      statusCode: 201,
-      message: 'Registrasi pengelola space berhasil! Lokasi coworking space telah didaftarkan.',
-      success: true,
-      data: {
-        user: {
-          id: user.id,
-          username: user.username,
-          role: user.role,
-        },
-        space_owner: {
-          id: owner.id,
-          nama_coworking: owner.nama_coworking,
-          nama_pemilik: owner.nama_pemilik,
         },
       },
     };
