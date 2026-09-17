@@ -211,13 +211,13 @@ export default function Home() {
           </div>
 
           {spacesLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 justify-items-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="w-40 md:w-52 bg-slate-200 animate-pulse rounded-2xl aspect-[3/4]" />
+                <div key={i} className="w-full bg-slate-200 animate-pulse rounded-2xl aspect-[3/4]" />
               ))}
             </div>
           ) : featured.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {featured.map((space) => (
                 <SpaceCard key={space.id} space={space} />
               ))}
