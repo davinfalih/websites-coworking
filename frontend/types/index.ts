@@ -26,6 +26,7 @@ export interface Member {
   instansi?: string | null;
   alamat?: string | null;
   telp?: string | null;
+  foto?: string | null;
   user?: { username?: string } | null;
   createdAt?: string;
   updatedAt?: string;

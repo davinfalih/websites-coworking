@@ -2,17 +2,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Pencil, Save, X, Briefcase, User as UserIcon, Phone, ArrowLeft, Building2 } from 'lucide-react';
+import { Pencil, Save, X, Briefcase, User as UserIcon, Phone, ArrowLeft, Building2, Camera, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/api';
 import type { Member } from '@/types';
+
+const uploadPhoto = async (file: File): Promise<string> => {
+  const fd = new FormData();
+  fd.append('file', file);
+  const res = await fetch('/api/upload', { method: 'POST', body: fd });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Gagal mengunggah foto');
+  return data.data.url;
+};
 
 export default function CustomerProfilePage() {
   const client = createClient();
   const [profile, setProfile] = useState<Member | null>(null);
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({ nama_member: '', instansi: '', telp: '' });
+  const [form, setForm] = useState({ nama_member: '', instansi: '', telp: '', foto: '' });
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const load = async () => {
     try {
@@ -22,6 +32,7 @@ export default function CustomerProfilePage() {
         nama_member: res.nama_member,
         instansi: res.instansi || '',
         telp: res.telp || '',
+        foto: res.foto || '',
       });
     } catch (e: any) {
       setMessage({ type: 'error', text: e?.message || 'Gagal memuat profil.' });
@@ -31,6 +42,23 @@ export default function CustomerProfilePage() {
   useEffect(() => {
     load();
   }, []);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setMessage(null);
+    try {
+      const url = await uploadPhoto(file);
+      setForm((prev) => ({ ...prev, foto: url }));
+      setMessage({ type: 'success', text: 'Foto berhasil diunggah. Klik Simpan untuk menyimpan perubahan.' });
+    } catch (err: any) {
+      setMessage({ type: 'error', text: err?.message || 'Gagal mengunggah foto.' });
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,8 +96,12 @@ export default function CustomerProfilePage() {
       {profile && !editing && (
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
           <div className="relative h-28 bg-gradient-to-br from-brand-700 to-emerald-600">
-            <div className="absolute -bottom-10 left-8 w-20 h-20 rounded-2xl bg-white border border-slate-200 shadow-lg flex items-center justify-center">
-              <span className="text-3xl font-bold text-brand-700">{profile.nama_member.charAt(0).toUpperCase()}</span>
+            <div className="absolute -bottom-10 left-8 w-20 h-20 rounded-2xl bg-white border border-slate-200 shadow-lg flex items-center justify-center overflow-hidden">
+              {profile.foto ? (
+                <img src={profile.foto} alt={profile.nama_member} className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-3xl font-bold text-brand-700">{profile.nama_member.charAt(0).toUpperCase()}</span>
+              )}
             </div>
           </div>
           <div className="pt-14 px-8 pb-8">
@@ -111,6 +143,31 @@ export default function CustomerProfilePage() {
             </button>
           </div>
           <form onSubmit={handleSave} className="space-y-5 max-w-xl">
+            <div>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Foto Profil</label>
+              <div className="flex items-center gap-4">
+                <div className="w-20 h-20 rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden flex items-center justify-center shrink-0">
+                  {form.foto ? (
+                    <img src={form.foto} alt="Foto profil" className="w-full h-full object-cover" />
+                  ) : (
+                    <UserIcon className="w-8 h-8 text-slate-300" />
+                  )}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className={`inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-xl border border-slate-200 transition cursor-pointer ${uploading ? 'opacity-60 cursor-wait' : 'hover:bg-slate-50 text-slate-700'}`}>
+                    <Camera className="w-4 h-4 text-brand-700" />
+                    {uploading ? 'Mengunggah...' : 'Unggah Foto'}
+                    <input type="file" accept="image/*" onChange={handleUpload} className="hidden" disabled={uploading} />
+                  </label>
+                  {form.foto && (
+                    <button type="button" onClick={() => setForm({ ...form, foto: '' })} className="inline-flex items-center gap-2 text-xs font-medium text-red-600 hover:text-red-700">
+                      <Trash2 className="w-3.5 h-3.5" /> Hapus foto
+                    </button>
+                  )}
+                  <p className="text-[11px] text-slate-400">PNG, JPG, WEBP maks 5MB.</p>
+                </div>
+              </div>
+            </div>
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Nama Lengkap</label>
               <div className="relative">

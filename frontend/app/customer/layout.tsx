@@ -11,6 +11,7 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
   const pathname = usePathname();
   const client = createClient();
   const [memberName, setMemberName] = useState<string | null>(null);
+  const [memberFoto, setMemberFoto] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
@@ -50,6 +51,7 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
       try {
         const profile = await client.getMyMemberProfile();
         setMemberName(profile.nama_member || fallback);
+        setMemberFoto(profile.foto || null);
       } catch {
         // fallback: nama dari sesi login
       }
@@ -119,8 +121,12 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
             {/* Profile Dropdown */}
             <div className="relative">
               <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} className="flex items-center gap-2.5 p-1.5 pl-2 pr-3 rounded-lg hover:bg-slate-100 border border-slate-200/80 transition text-left focus:outline-none focus:ring-2 focus:ring-brand-700/20">
-                <div className="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-semibold text-xs ring-2 ring-brand-100">
-                  {memberName?.charAt(0).toUpperCase()}
+                <div className="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-semibold text-xs ring-2 ring-brand-100 overflow-hidden">
+                  {memberFoto ? (
+                    <img src={memberFoto} alt={memberName || 'Member'} className="w-full h-full object-cover" />
+                  ) : (
+                    memberName?.charAt(0).toUpperCase()
+                  )}
                 </div>
                 <div className="hidden sm:block leading-tight">
                   <p className="text-xs font-semibold text-slate-800">{memberName}</p>
