@@ -140,11 +140,6 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-10 pt-10 pb-16 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-600/30 bg-emerald-600/10 text-emerald-700 text-xs font-medium tracking-wide mb-6 backdrop-blur-sm">
-            <Star className="w-3.5 h-3.5 fill-emerald-700 text-emerald-700" />
-            Coworking Space Terbaik untuk Produktivitasmu
-          </div>
-
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1.05] max-w-4xl mx-auto mb-6">
             Reservasi{" "}
             <span className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-700 bg-clip-text text-transparent">
