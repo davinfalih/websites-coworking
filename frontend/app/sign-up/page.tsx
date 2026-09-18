@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { api } from "@/lib/api";
+import { NexusMark } from "@/components/ui/Logo";
 
 export default function SignUp() {
   const router = useRouter();
@@ -61,31 +62,24 @@ export default function SignUp() {
   return (
     <main className="min-h-screen w-full flex flex-col lg:flex-row bg-white text-slate-900 antialiased">
       {/* LeftBrandShowcase */}
-      <section className="relative hidden lg:flex lg:w-[45%] xl:w-[42%] flex-col justify-between p-10 xl:p-14 overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800 text-white select-none">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='1' fill='none' d='M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4'/%3E%3C/svg%3E")`,
-            backgroundSize: "30px 30px",
-          }}
+      <section className="relative hidden lg:flex lg:w-[45%] xl:w-[42%] flex-col justify-between p-10 xl:p-14 overflow-hidden text-white select-none">
+        <img
+          src="https://images.pexels.com/photos/3862385/pexels-photo-3862385.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          alt="Nexus Coworking Space"
+          className="absolute inset-0 w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/90 via-emerald-900/70 to-teal-900/60" />
 
-        <div className="relative z-10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-emerald-300 shadow-inner">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-              </svg>
+        <Link href="/" className="relative z-10 inline-flex items-center gap-3 w-fit">
+          <NexusMark className="w-10 h-10" />
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-2xl font-bold tracking-tight text-white">Nexus</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-2xl font-bold tracking-tight text-white">Nexus</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              </div>
-              <span className="text-xs uppercase tracking-widest text-emerald-200/80 font-medium">Workstation &amp; Booking</span>
-            </div>
+            <span className="text-xs uppercase tracking-widest text-emerald-200/80 font-medium">Workstation &amp; Booking</span>
           </div>
-        </div>
+        </Link>
 
         <div className="relative z-10 my-auto py-12 max-w-lg">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-emerald-400/30 text-emerald-200 text-xs font-semibold mb-6 backdrop-blur-sm">
@@ -94,26 +88,9 @@ export default function SignUp() {
           <h1 className="text-3xl xl:text-4xl font-extrabold tracking-tight text-white leading-tight mb-4">
             Ruang Kerja Tenang untuk Produktivitas Maksimal.
           </h1>
-          <p className="text-emerald-100/80 text-sm xl:text-base leading-relaxed mb-8">
+          <p className="text-emerald-100/85 text-sm xl:text-base leading-relaxed mb-8">
             Temukan suasana bekerja yang kondusif dengan fasilitas pintar terintegrasi, fleksibilitas reservasi instan, dan ekosistem profesional dinamis.
           </p>
-
-          <ul className="space-y-4 text-sm xl:text-base">
-            {[
-              "Akses 24/7 High-speed Internet & Private Power-outlets",
-              "Ergonomic Pods & Private Meeting Rooms",
-              "Komunitas Profesional & Kreatif Terkurasi"
-            ].map(item => (
-              <li key={item} className="flex items-start gap-3 text-emerald-100/90">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                </div>
-                <span className="font-medium">{item}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -121,11 +98,7 @@ export default function SignUp() {
       <section className="flex-1 min-h-screen flex items-center justify-center px-4 py-8 sm:px-8 lg:px-12 bg-white">
         <div className="w-full max-w-lg py-6">
           <div className="flex lg:hidden items-center gap-2.5 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center text-white">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-              </svg>
-            </div>
+            <NexusMark className="w-9 h-9" />
             <span className="text-xl font-bold tracking-tight text-slate-900">Nexus</span>
           </div>
 

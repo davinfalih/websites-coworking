@@ -13,24 +13,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
-
-const NexusMark = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    className="text-white"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      stroke="currentColor"
-      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-    />
-  </svg>
-);
+import { NexusMark } from "@/components/ui/Logo";
 
 export default function Navbar() {
   const router = useRouter();
@@ -107,37 +90,34 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 w-full z-50">
-        <nav
-          className={`transition-all duration-500 ${isScrolled
-              ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-slate-200"
-              : "bg-white/90 backdrop-blur-sm"
+      <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <nav
+            className={`flex items-center justify-between gap-3 rounded-full px-4 sm:px-5 transition-all duration-500 ${
+              isScrolled
+                ? "mt-2 h-14 bg-white/90 backdrop-blur-xl shadow-lg shadow-slate-900/10 border border-slate-200"
+                : "mt-3 h-[60px] bg-white/80 backdrop-blur-md border border-white/70"
             }`}
-        >
-
-          <div className="container mx-auto px-4 sm:px-6 lg:px-10">
-            <div className="flex justify-between items-center h-[68px]">
-              <Link
-                href="/"
-                className="group flex items-center gap-2.5 shrink-0"
-              >
-                <div className="relative">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-700 shadow-sm flex items-center justify-center group-hover:bg-emerald-600 transition-all duration-300">
-                    <NexusMark />
-                  </div>
-                  <span className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-white" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <div className="font-bold text-xl text-slate-900 tracking-tight leading-none group-hover:text-emerald-700 transition-colors duration-300">
-                      Nexus
-                    </div>
-                  </div>
-                  <div className="text-[9px] text-slate-400 tracking-[0.2em] uppercase font-semibold mt-0.5">
-                    Coworking Space
+          >
+            <Link
+              href="/"
+              className="group flex items-center gap-2.5 shrink-0"
+            >
+              <div className="relative">
+                <NexusMark className="w-10 h-10 drop-shadow-sm group-hover:scale-105 transition-transform duration-300" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <div className="font-bold text-xl text-slate-900 tracking-tight leading-none group-hover:text-emerald-700 transition-colors duration-300">
+                    Nexus
                   </div>
                 </div>
-              </Link>
+                <div className="text-[9px] text-slate-400 tracking-[0.2em] uppercase font-semibold mt-0.5">
+                  Coworking Space
+                </div>
+              </div>
+            </Link>
 
               {/* Desktop Nav */}
               <div className="hidden lg:flex items-center gap-0.5">
@@ -196,7 +176,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <Link
                   href={profileHref}
-                  className="hidden md:flex p-2.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200"
+                  className="hidden md:flex p-2.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition-all duration-200"
                   aria-label="Akun saya"
                 >
                   <User className="w-4.5 h-4.5" />
@@ -205,7 +185,7 @@ export default function Navbar() {
                 {isAuthenticated && (
                   <Link
                     href={userRole === 'ADMIN_SPACE' ? '/admin/spaces' : '/customer/reservasi'}
-                    className="hidden md:flex p-2.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200"
+                    className="hidden md:flex p-2.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition-all duration-200"
                     aria-label="Dashboard"
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -214,7 +194,7 @@ export default function Navbar() {
 
                 <Link
                   href={isAuthenticated ? "/customer/spaces" : "/spaces"}
-                  className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-lg transition-all duration-200 shadow-sm"
+                  className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-full transition-all duration-200 shadow-sm"
                   aria-label="Reservasi space"
                 >
                   <CalendarClock className="w-4 h-4" />
@@ -245,12 +225,9 @@ export default function Navbar() {
                   )}
                 </button>
               </div>
-            </div>
-          </div>
-
-          <div className="h-px w-full bg-slate-100" />
-        </nav>
-      </div>
+          </nav>
+        </div>
+      </header>
 
       {/* Mobile Menu */}
       <div
@@ -265,9 +242,7 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between p-5 border-b border-slate-200">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center">
-                <NexusMark />
-              </div>
+              <NexusMark className="w-9 h-9" />
               <div className="font-bold text-lg text-slate-900 tracking-tight">Nexus Booking</div>
             </div>
             <button
@@ -338,7 +313,7 @@ export default function Navbar() {
       </div>
 
       {/* Spacer */}
-      <div className="h-[68px]" />
+      <div className="h-[84px]" />
     </>
   );
 }

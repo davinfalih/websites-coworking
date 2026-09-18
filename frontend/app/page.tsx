@@ -12,13 +12,13 @@ import {
   Star,
   Users,
   ArrowRight,
-  CheckCircle2,
   Armchair,
   Briefcase,
   Building,
 } from "lucide-react";
 import type { Space } from "@/types";
 import { api } from "@/lib/api";
+import { NexusMark } from "@/components/ui/Logo";
 import SpaceCard from "@/components/space/SpaceCard";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
@@ -128,14 +128,10 @@ export default function Home() {
           <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-emerald-600/10 blur-[120px]" />
           <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-teal-600/10 blur-[120px]" />
           <div className="absolute top-24 right-16 hidden lg:block opacity-20">
-            <svg width="380" height="380" viewBox="0 0 24 24" fill="none" className="text-emerald-700">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" stroke="currentColor" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
+            <NexusMark className="w-[380px] h-[380px]" />
           </div>
           <div className="absolute bottom-24 left-10 hidden lg:block opacity-15" style={{ transform: "rotate(-8deg)" }}>
-            <svg width="160" height="160" viewBox="0 0 24 24" fill="none" className="text-emerald-700">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" stroke="currentColor" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
+            <NexusMark className="w-[160px] h-[160px]" />
           </div>
         </div>
 
@@ -302,43 +298,19 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full rounded-2xl border-2 border-emerald-600/30" />
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800 p-8 md:p-10 shadow-xl">
-              <div
-                className="absolute inset-0 opacity-10"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='1' fill='none' d='M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4'/%3E%3C/svg%3E")`,
-                  backgroundSize: "30px 30px",
-                }}
+            <div className="relative rounded-2xl overflow-hidden shadow-xl h-[420px] md:h-[540px]">
+              <img
+                src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Coworking Space Nusantara"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="relative flex items-center gap-2 text-emerald-100 italic mb-8 text-lg">
-                <Star className="w-4 h-4 fill-emerald-400 text-emerald-400" />
-                Coworking Space Nusantara
-              </div>
-              <div className="space-y-5 relative">
-                {[
-                  "Personal desk 24 jam dengan WiFi kencang",
-                  "Meeting room kapasitas hingga 8 orang lengkap dengan proyektor",
-                  "Private office untuk tim yang butuh ruang kerja khusus",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                    <p className="text-emerald-100/80 text-sm leading-relaxed">{item}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 flex gap-6">
-                <div>
-                  <p className="text-2xl font-bold text-emerald-400">500+</p>
-                  <p className="text-[10px] text-emerald-100/50 uppercase tracking-wider mt-1">Reservasi</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-emerald-400">3</p>
-                  <p className="text-[10px] text-emerald-100/50 uppercase tracking-wider mt-1">Tipe Space</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-emerald-400">100%</p>
-                  <p className="text-[10px] text-emerald-100/50 uppercase tracking-wider mt-1">Kepuasan</p>
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-emerald-900/15 to-transparent" />
+              <div className="absolute bottom-0 inset-x-0 p-6 md:p-8">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-emerald-50 text-xs font-medium">
+                  <Star className="w-3.5 h-3.5 fill-emerald-300 text-emerald-300" />
+                  Coworking Space Nusantara
+                </span>
               </div>
             </div>
           </div>

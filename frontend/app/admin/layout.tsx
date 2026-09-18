@@ -23,6 +23,7 @@ import {
   PanelLeftOpen,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { NexusMark } from '@/components/ui/Logo';
 
 const menuItems = [
   { name: 'Reservasi', icon: CalendarClock, href: '/admin/reservasi' },
@@ -128,14 +129,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="border-b border-slate-800 p-5">
           <Link href="/admin/profile" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-700 text-white shadow-sm">
-              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-                <path d="M4 20V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v13H4Z" fill="currentColor" opacity="0.35" />
-                <path d="M2 20h20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <path d="M8 20v-8m4 8V6m4 14v-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-                <circle cx="18.5" cy="4.5" r="2.2" fill="#10B981" />
-              </svg>
-            </div>
+            <NexusMark className="h-9 w-9 shrink-0" />
             <div className="leading-none">
               <p className="text-base font-semibold tracking-tight text-white">Nexus</p>
               <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-400">

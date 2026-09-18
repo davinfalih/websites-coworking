@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { api } from "@/lib/api";
+import { NexusMark } from "@/components/ui/Logo";
 
 export default function SignIn() {
   const router = useRouter();
@@ -45,21 +46,16 @@ export default function SignIn() {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-white text-slate-800 antialiased">
       {/* LeftBrandSidebar */}
-      <section className="relative w-full lg:w-[46%] min-h-[500px] lg:min-h-screen flex flex-col justify-between p-8 lg:p-14 overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='1' fill='none' d='M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4'/%3E%3C/svg%3E")`,
-            backgroundSize: "30px 30px",
-          }}
+      <section className="relative w-full lg:w-[46%] min-h-[500px] lg:min-h-screen flex flex-col justify-between p-8 lg:p-14 overflow-hidden">
+        <img
+          src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1600"
+          alt="Coworking Space Nusantara"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        
-        <div className="flex items-center gap-3 relative z-10">
-          <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-emerald-300 shadow-inner">
-            <svg className="h-6 w-6 text-emerald-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-            </svg>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/90 via-emerald-900/70 to-teal-900/60" />
+
+        <Link href="/" className="relative z-10 inline-flex items-center gap-3 w-fit">
+          <NexusMark className="w-11 h-11" />
           <div>
             <div className="flex items-center gap-2">
               <span className="text-white font-bold text-xl tracking-tight">Nexus</span>
@@ -67,9 +63,9 @@ export default function SignIn() {
             </div>
             <p className="text-[10px] font-semibold text-emerald-200/80 tracking-widest uppercase">Workstation &amp; Booking</p>
           </div>
-        </div>
+        </Link>
 
-        <div className="my-10 lg:my-auto max-w-lg space-y-6 relative z-10">
+        <div className="relative z-10 my-10 lg:my-auto max-w-lg space-y-5">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-emerald-400/30 text-emerald-200 text-xs font-medium backdrop-blur-sm">
             <span>🌿</span>
             <span>Ruang Kerja Ergonomis &amp; Tenang</span>
@@ -77,25 +73,9 @@ export default function SignIn() {
           <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-white leading-tight tracking-tight">
             Ruang Kerja Tenang untuk Produktivitas Maksimal.
           </h1>
-          <p className="text-emerald-100/80 text-sm sm:text-base leading-relaxed">
+          <p className="text-emerald-100/85 text-sm sm:text-base leading-relaxed">
             Temukan suasana bekerja yang kondusif dengan fasilitas pintar terintegrasi, fleksibilitas reservasi instan, dan ekosistem profesional dinamis.
           </p>
-          <div className="space-y-3.5 pt-2">
-            {[
-              "Akses 24/7 High-speed Internet & Private Power-outlets",
-              "Ergonomic Pods & Private Meeting Rooms",
-              "Komunitas Profesional & Kreatif Terkurasi"
-            ].map(item => (
-              <div key={item} className="flex items-start gap-3 text-emerald-100/90">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 mt-0.5">
-                  <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
-                  </svg>
-                </div>
-                <p className="text-white text-sm font-medium">{item}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
