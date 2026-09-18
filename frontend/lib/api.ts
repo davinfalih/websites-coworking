@@ -14,6 +14,30 @@ import type {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
+// Upload gambar ke backend (Railway) — bukan ke filesystem frontend,
+// agar tetap jalan di hosting serverless seperti Vercel (FS read-only).
+export async function uploadImage(file: File): Promise<string> {
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch(`${API_URL}/uploads`, {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    body: formData,
+  });
+  let data: { data?: { url?: string }; message?: string } = {};
+  try {
+    data = await res.json();
+  } catch {
+    // respons bukan JSON
+  }
+  if (!res.ok) throw new Error(data?.message || 'Gagal mengunggah foto');
+  const url = data?.data?.url;
+  if (!url) throw new Error('Gagal mengunggah foto');
+  return /^https?:\/\//.test(url) ? url : `${API_URL}${url}`;
+}
+
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,

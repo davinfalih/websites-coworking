@@ -5,16 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Save, ArrowLeft, Upload, Building2, Trash2, ImageOff } from 'lucide-react';
-import { createClient, SPACE_TYPE_LABEL } from '@/lib/api';
-
-const uploadToFe = async (file: File): Promise<string> => {
-  const fd = new FormData();
-  fd.append('file', file);
-  const res = await fetch('/api/upload', { method: 'POST', body: fd });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || 'Gagal mengunggah foto');
-  return data.data.url;
-};
+import { createClient, SPACE_TYPE_LABEL, uploadImage } from '@/lib/api';
 
 export default function AddSpacePage() {
   const router = useRouter();
@@ -38,7 +29,7 @@ export default function AddSpacePage() {
     setUploading(true);
     setError(null);
     try {
-      const url = await uploadToFe(file);
+      const url = await uploadImage(file);
       setForm((f) => ({ ...f, foto: url }));
       setPreview(url);
     } catch (err: any) {

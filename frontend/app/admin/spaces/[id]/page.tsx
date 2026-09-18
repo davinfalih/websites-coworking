@@ -5,17 +5,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { Save, ArrowLeft, Upload, Building2, Trash2, ImageOff, Users } from 'lucide-react';
-import { createClient, SPACE_TYPE_LABEL, formatRupiah } from '@/lib/api';
+import { createClient, SPACE_TYPE_LABEL, formatRupiah, uploadImage } from '@/lib/api';
 import type { Space } from '@/types';
-
-const uploadToFe = async (file: File): Promise<string> => {
-  const fd = new FormData();
-  fd.append('file', file);
-  const res = await fetch('/api/upload', { method: 'POST', body: fd });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || 'Gagal mengunggah foto');
-  return data.data.url;
-};
 
 export default function EditSpacePage() {
   const params = useParams<{ id: string }>();
@@ -63,7 +54,7 @@ export default function EditSpacePage() {
     setUploading(true);
     setError(null);
     try {
-      const url = await uploadToFe(file);
+      const url = await uploadImage(file);
       setForm((f) => ({ ...f, foto: url }));
     } catch (err: any) {
       setError(err?.message || 'Gagal mengunggah foto.');

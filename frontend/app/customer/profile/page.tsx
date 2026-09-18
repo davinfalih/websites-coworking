@@ -3,17 +3,8 @@
 
 import { useEffect, useState } from 'react';
 import { Pencil, Save, X, Briefcase, User as UserIcon, Phone, ArrowLeft, Building2, Camera, Trash2 } from 'lucide-react';
-import { createClient } from '@/lib/api';
+import { createClient, uploadImage } from '@/lib/api';
 import type { Member } from '@/types';
-
-const uploadPhoto = async (file: File): Promise<string> => {
-  const fd = new FormData();
-  fd.append('file', file);
-  const res = await fetch('/api/upload', { method: 'POST', body: fd });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || 'Gagal mengunggah foto');
-  return data.data.url;
-};
 
 export default function CustomerProfilePage() {
   const client = createClient();
@@ -49,7 +40,7 @@ export default function CustomerProfilePage() {
     setUploading(true);
     setMessage(null);
     try {
-      const url = await uploadPhoto(file);
+      const url = await uploadImage(file);
       setForm((prev) => ({ ...prev, foto: url }));
       setMessage({ type: 'success', text: 'Foto berhasil diunggah. Klik Simpan untuk menyimpan perubahan.' });
     } catch (err: any) {
